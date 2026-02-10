@@ -63,6 +63,7 @@ function PaymentReturnContent() {
   const phoneId = searchParams.get("phone_id");
   const urlStatus = searchParams.get("status") || "unknown";
   const [verifiedStatus, setVerifiedStatus] = useState<string | null>(null);
+  const [processorMessage, setProcessorMessage] = useState<string | null>(null);
   const [polling, setPolling] = useState(false);
 
   useEffect(() => {
@@ -78,6 +79,9 @@ function PaymentReturnContent() {
         if (!res.ok) return;
         const data = await res.json();
         setVerifiedStatus(data.status);
+        if (data.processor_message) {
+          setProcessorMessage(data.processor_message);
+        }
 
         // Stop polling if status is final
         if (
@@ -134,6 +138,11 @@ function PaymentReturnContent() {
             ? "Please wait while we verify your payment with Sentoo."
             : config.message}
         </p>
+        {processorMessage && status !== "success" && (
+          <p className="text-sm text-muted-foreground bg-muted rounded-md px-3 py-2">
+            {processorMessage}
+          </p>
+        )}
         {polling && verifiedStatus && (verifiedStatus === "pending" || verifiedStatus === "issued") && (
           <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground">
             <Loader2 className="h-4 w-4 animate-spin" />
@@ -141,7 +150,12 @@ function PaymentReturnContent() {
           </div>
         )}
         <div className="flex flex-col gap-2">
-          <Button asChild>
+          {status !== "success" && phoneId && (
+            <Button asChild>
+              <Link href={`/phones/${phoneId}`}>Try Again</Link>
+            </Button>
+          )}
+          <Button asChild variant={status === "success" ? "default" : "outline"}>
             <Link href="/phones">Continue Shopping</Link>
           </Button>
           <Button asChild variant="outline">

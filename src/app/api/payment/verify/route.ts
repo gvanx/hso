@@ -39,9 +39,15 @@ export async function GET(request: NextRequest) {
 
   // Poll Sentoo for the real status
   let sentooStatus: string;
+  let processorMessage: string | undefined;
   try {
     const statusResponse = await fetchTransactionStatus(order.sentoo_tx_id);
     sentooStatus = statusResponse.success.message;
+    // Extract the latest processor response message (if any)
+    const responses = statusResponse.success.data?.responses;
+    if (responses && responses.length > 0) {
+      processorMessage = responses[responses.length - 1].message;
+    }
   } catch (err) {
     console.error("Verify: failed to fetch Sentoo status:", err);
     return NextResponse.json({ status: order.payment_status });
@@ -61,7 +67,7 @@ export async function GET(request: NextRequest) {
 
   // No change — return current
   if (paymentStatus === order.payment_status) {
-    return NextResponse.json({ status: paymentStatus });
+    return NextResponse.json({ status: paymentStatus, ...(processorMessage && { processor_message: processorMessage }) });
   }
 
   // Update order status
@@ -121,5 +127,5 @@ export async function GET(request: NextRequest) {
       .eq("id", order.phone_id);
   }
 
-  return NextResponse.json({ status: paymentStatus });
+  return NextResponse.json({ status: paymentStatus, ...(processorMessage && { processor_message: processorMessage }) });
 }
