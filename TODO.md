@@ -32,9 +32,9 @@
 - [ ] **Admin: bulk actions** — mark multiple phones as sold/available
 
 ### Low Priority / Nice to Have
-- [ ] **Storefront: pagination** — if inventory grows large
-- [ ] **SEO: meta tags** — per-phone open graph tags for sharing
-- [ ] **Analytics** — track page views, conversion rates
+- [x] **Storefront: pagination** — 12 per page with Prev/Next controls
+- [x] **SEO: meta tags** — OG + Twitter Card on all pages, dynamic for phone detail
+- [x] **Analytics** — Google Analytics via NEXT_PUBLIC_GA_MEASUREMENT_ID env var
 
 ## Environment Variables Still Needed
 ```
@@ -43,6 +43,7 @@ TWILIO_AUTH_TOKEN=
 TWILIO_PHONE_NUMBER=
 TWILIO_WHATSAPP_NUMBER=
 RESEND_API_KEY=
+NEXT_PUBLIC_GA_MEASUREMENT_ID=
 ```
 Add these in both `.env.local` (local dev) and Netlify dashboard (production).
 
