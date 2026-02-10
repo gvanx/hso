@@ -5,7 +5,7 @@ import Image from "next/image";
 import { createClient } from "@/lib/supabase/server";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { formatCurrency, getGradeLabel } from "@/lib/utils";
+import { formatCurrency, getGradeLabel, getGradeColor, getPhoneColorHex } from "@/lib/utils";
 import {
   Smartphone,
   Battery,
@@ -160,7 +160,10 @@ export default async function PhoneDetailPage({
                 <div className="flex items-center gap-3">
                   <Tag className="h-4 w-4 text-muted-foreground" />
                   <span className="text-sm">
-                    Grade: {getGradeLabel(phone.grade)}
+                    Grade:{" "}
+                    <span className={`inline-block px-2 py-0.5 rounded-full text-xs font-medium ${getGradeColor(phone.grade)}`}>
+                      {getGradeLabel(phone.grade)}
+                    </span>
                   </span>
                 </div>
               )}
@@ -174,7 +177,10 @@ export default async function PhoneDetailPage({
               )}
               {phone.color && (
                 <div className="flex items-center gap-3">
-                  <div className="h-4 w-4 rounded-full bg-muted border" />
+                  <div
+                    className="h-4 w-4 rounded-full border border-gray-300"
+                    style={getPhoneColorHex(phone.color) ? { backgroundColor: getPhoneColorHex(phone.color)! } : { backgroundColor: '#d1d5db' }}
+                  />
                   <span className="text-sm">Color: {phone.color}</span>
                 </div>
               )}

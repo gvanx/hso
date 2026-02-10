@@ -21,7 +21,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { createClient } from "@/lib/supabase/client";
-import { formatCurrency, getStatusColor } from "@/lib/utils";
+import { formatCurrency, getStatusColor, getGradeColor } from "@/lib/utils";
 import { toast } from "sonner";
 import type { Phone } from "@/lib/types";
 import { MoreHorizontal, Pencil, Trash2, Smartphone, XCircle, ShoppingBag } from "lucide-react";
@@ -136,7 +136,13 @@ export function AdminPhoneTable({ phones }: { phones: Phone[] }) {
                 <TableCell className="font-medium">{phone.model}</TableCell>
                 <TableCell>{phone.brand}</TableCell>
                 <TableCell>{formatCurrency(phone.price_cents)}</TableCell>
-                <TableCell>{phone.grade || "-"}</TableCell>
+                <TableCell>
+                  {phone.grade ? (
+                    <Badge variant="secondary" className={getGradeColor(phone.grade)}>
+                      {phone.grade}
+                    </Badge>
+                  ) : "-"}
+                </TableCell>
                 <TableCell>
                   <Badge
                     variant="secondary"

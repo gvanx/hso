@@ -2,7 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { formatCurrency } from "@/lib/utils";
+import { formatCurrency, getGradeColor, getPhoneColorHex } from "@/lib/utils";
 import type { Phone } from "@/lib/types";
 import { Battery, Smartphone } from "lucide-react";
 
@@ -27,7 +27,7 @@ export function PhoneCard({ phone }: { phone: Phone }) {
             </div>
           )}
           {phone.grade && (
-            <Badge className="absolute top-2 right-2" variant="secondary">
+            <Badge className={`absolute top-2 right-2 ${getGradeColor(phone.grade)}`}>
               Grade {phone.grade}
             </Badge>
           )}
@@ -49,7 +49,13 @@ export function PhoneCard({ phone }: { phone: Phone }) {
             )}
           </div>
           {phone.color && (
-            <p className="text-xs text-muted-foreground mt-1">{phone.color}</p>
+            <p className="text-xs text-muted-foreground mt-1 flex items-center gap-1.5">
+              <span
+                className="inline-block h-2.5 w-2.5 rounded-full border border-gray-300 shrink-0"
+                style={getPhoneColorHex(phone.color) ? { backgroundColor: getPhoneColorHex(phone.color)! } : undefined}
+              />
+              {phone.color}
+            </p>
           )}
         </CardContent>
       </Card>
