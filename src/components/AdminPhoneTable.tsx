@@ -24,12 +24,13 @@ import { createClient } from "@/lib/supabase/client";
 import { formatCurrency, getStatusColor } from "@/lib/utils";
 import { toast } from "sonner";
 import type { Phone } from "@/lib/types";
-import { MoreHorizontal, Pencil, Trash2, Smartphone } from "lucide-react";
+import { MoreHorizontal, Pencil, Trash2, Smartphone, XCircle, ShoppingBag } from "lucide-react";
 
 export function AdminPhoneTable({ phones }: { phones: Phone[] }) {
   const router = useRouter();
   const supabase = createClient();
   const [deleting, setDeleting] = useState<string | null>(null);
+  const [acting, setActing] = useState<string | null>(null);
 
   async function handleDelete(id: string) {
     if (!confirm("Are you sure you want to delete this phone?")) return;
@@ -43,6 +44,52 @@ export function AdminPhoneTable({ phones }: { phones: Phone[] }) {
       router.refresh();
     }
     setDeleting(null);
+  }
+
+  async function handleCancelReservation(phone: Phone) {
+    if (!confirm(`Cancel reservation for ${phone.model}? This will make it available again.`)) return;
+    setActing(phone.id);
+
+    const { error: phoneError } = await supabase
+      .from("phones")
+      .update({ status: "available" })
+      .eq("id", phone.id);
+
+    if (phoneError) {
+      toast.error(phoneError.message);
+      setActing(null);
+      return;
+    }
+
+    // Cancel any pending orders for this phone
+    await supabase
+      .from("orders")
+      .update({ payment_status: "cancelled" })
+      .eq("phone_id", phone.id)
+      .in("payment_status", ["created", "issued", "pending"]);
+
+    toast.success("Reservation cancelled");
+    router.refresh();
+    setActing(null);
+  }
+
+  async function handleMarkAsSold(phone: Phone) {
+    if (!confirm(`Mark ${phone.model} as sold (walk-in sale)?`)) return;
+    setActing(phone.id);
+
+    const res = await fetch(`/api/admin/phones/${phone.id}/sold`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({}),
+    });
+
+    if (!res.ok) {
+      toast.error("Failed to mark as sold");
+    } else {
+      toast.success("Phone marked as sold");
+      router.refresh();
+    }
+    setActing(null);
   }
 
   return (
@@ -112,6 +159,24 @@ export function AdminPhoneTable({ phones }: { phones: Phone[] }) {
                           Edit
                         </Link>
                       </DropdownMenuItem>
+                      {phone.status === "reserved" && (
+                        <DropdownMenuItem
+                          onClick={() => handleCancelReservation(phone)}
+                          disabled={acting === phone.id}
+                        >
+                          <XCircle className="h-4 w-4 mr-2" />
+                          Cancel Reservation
+                        </DropdownMenuItem>
+                      )}
+                      {phone.status === "available" && (
+                        <DropdownMenuItem
+                          onClick={() => handleMarkAsSold(phone)}
+                          disabled={acting === phone.id}
+                        >
+                          <ShoppingBag className="h-4 w-4 mr-2" />
+                          Mark as Sold
+                        </DropdownMenuItem>
+                      )}
                       <DropdownMenuItem
                         onClick={() => handleDelete(phone.id)}
                         disabled={deleting === phone.id}

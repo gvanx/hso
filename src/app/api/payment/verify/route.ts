@@ -110,9 +110,9 @@ export async function GET(request: NextRequest) {
       .eq("id", order.id);
   }
 
-  // Handle cancelled/expired: revert phone to available
+  // Handle failed/cancelled/expired: revert phone to available
   if (
-    (paymentStatus === "cancelled" || paymentStatus === "expired") &&
+    (paymentStatus === "failed" || paymentStatus === "cancelled" || paymentStatus === "expired") &&
     order.phone?.status === "reserved"
   ) {
     await supabase
