@@ -3,7 +3,7 @@ import { createAdminClient } from "@/lib/supabase/admin";
 import { fetchTransactionStatus } from "@/lib/sentoo";
 
 const CRON_SECRET = process.env.CRON_SECRET;
-const STALE_MINUTES = 30;
+const STALE_MINUTES = 10;
 
 export async function GET(request: NextRequest) {
   // Verify authorization
@@ -63,10 +63,6 @@ export async function GET(request: NextRequest) {
             .update({ payment_status: "success" })
             .eq("id", order.id);
           results.push({ phone_id: phone.id, model: phone.model, action: "marked_sold" });
-          shouldRevert = false;
-        } else if (sentooStatus === "pending" || sentooStatus === "issued") {
-          // Still actively pending — skip for now
-          results.push({ phone_id: phone.id, model: phone.model, action: "skipped_still_pending" });
           shouldRevert = false;
         }
       } catch (err) {

@@ -3,7 +3,7 @@ import { createClient } from "@/lib/supabase/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { fetchTransactionStatus } from "@/lib/sentoo";
 
-const STALE_MINUTES = 30;
+const STALE_MINUTES = 10;
 
 export async function POST() {
   // Verify admin is authenticated
@@ -56,9 +56,6 @@ export async function POST() {
           await supabase.from("phones").update({ status: "sold" }).eq("id", phone.id);
           await supabase.from("orders").update({ payment_status: "success" }).eq("id", order.id);
           results.push({ phone_id: phone.id, model: phone.model, action: "marked_sold" });
-          shouldRevert = false;
-        } else if (sentooStatus === "pending" || sentooStatus === "issued") {
-          results.push({ phone_id: phone.id, model: phone.model, action: "skipped_still_pending" });
           shouldRevert = false;
         }
       } catch (err) {
