@@ -10,29 +10,31 @@
 - [x] Notification system (SMS, email, WhatsApp) + PDF invoice generation
 - [x] Deployed to Netlify at hso.connectionscuracao.net
 - [x] Sentoo sandbox: domain whitelisted, payment creation working
+- [x] Set Sentoo webhook URL in sandbox portal
+- [x] Full payment flow tested end-to-end (create → pay → webhook → phone sold)
+- [x] Failed/cancelled payment reverts phone to available
+- [x] Custom domain SSL verified (Let's Encrypt on hso.connectionscuracao.net)
+- [x] Payment return page tested
+- [x] Double-purchase protection (reserved phones can't be bought by second buyer)
+- [x] Admin phone actions: cancel reservation, mark as sold (walk-in)
+- [x] Auto-revert stale reservations after 10 min via cron (cron-job.org every 5 min)
+- [x] Admin cleanup reservations button
 
 ## To Do
 
 ### High Priority
-- [ ] **Set Sentoo webhook URL** in sandbox portal to `https://hso.connectionscuracao.net/api/webhooks/sentoo`
-- [ ] **Test full payment flow** on live site (create payment → complete in sandbox → verify webhook fires → phone marked sold)
-- [x] **Test failed/cancelled payment** — verify phone reverts to available
 - [ ] **Set up Twilio** for SMS + WhatsApp notifications (need account + phone numbers)
 - [ ] **Set up Resend** for email notifications (need API key + verify domain)
+- [ ] **Sentoo production credentials** — switch from sandbox to production when ready to go live
 
 ### Medium Priority
-- [ ] **Sentoo production credentials** — switch from sandbox to production when ready to go live
-- [ ] **Custom domain SSL** — verify hso.connectionscuracao.net has proper HTTPS (needed for Sentoo webhook)
 - [ ] **Phone delete protection** — show better error when trying to delete a phone that has orders
-- [ ] **Payment return page** — currently redirects to hso.connectionscuracao.net which shows status, but test the actual redirect flow end-to-end
-- [ ] **Double-purchase test** — verify second buyer sees "reserved" and can't buy same phone
+- [ ] **Admin: bulk actions** — mark multiple phones as sold/available
 
 ### Low Priority / Nice to Have
-- [ ] **Admin: bulk actions** — mark multiple phones as sold/available
 - [ ] **Storefront: pagination** — if inventory grows large
 - [ ] **SEO: meta tags** — per-phone open graph tags for sharing
 - [ ] **Analytics** — track page views, conversion rates
-- [x] **Expiry handling** — auto-revert reserved phones after 10 min via cron (cron-job.org every 5 min)
 
 ## Environment Variables Still Needed
 ```
