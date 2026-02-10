@@ -105,7 +105,7 @@ export async function GET(request: NextRequest) {
     }
 
     try {
-      await sendAllNotifications(order, order.phone, invoiceUrl);
+      await sendAllNotifications(order, order.phone, invoiceUrl, order.fulfillment_type);
     } catch (err) {
       console.error("Notification error:", err);
     }

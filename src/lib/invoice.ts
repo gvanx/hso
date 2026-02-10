@@ -134,7 +134,21 @@ function buildDocument(order: Order, phone: Phone) {
             { style: styles.value },
             order.buyer_phone
           )
-        )
+        ),
+        ...(order.delivery_address
+          ? [
+              React.createElement(
+                View,
+                { key: "addr", style: styles.row },
+                React.createElement(Text, { style: styles.label }, "Delivery Address:"),
+                React.createElement(
+                  Text,
+                  { style: styles.value },
+                  order.delivery_address
+                )
+              ),
+            ]
+          : [])
       ),
       React.createElement(
         View,
@@ -180,6 +194,30 @@ function buildDocument(order: Order, phone: Phone) {
             phone.reference || "N/A"
           )
         ),
+        React.createElement(
+          View,
+          { style: styles.row },
+          React.createElement(Text, { style: styles.label }, "Price:"),
+          React.createElement(
+            Text,
+            { style: styles.value },
+            fmt(phone.price_cents)
+          )
+        ),
+        ...(order.delivery_fee_cents > 0
+          ? [
+              React.createElement(
+                View,
+                { key: "delfee", style: styles.row },
+                React.createElement(Text, { style: styles.label }, "Delivery Fee:"),
+                React.createElement(
+                  Text,
+                  { style: styles.value },
+                  fmt(order.delivery_fee_cents)
+                )
+              ),
+            ]
+          : []),
         React.createElement(
           View,
           { style: styles.totalRow },

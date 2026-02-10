@@ -2,13 +2,21 @@ import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { createTransaction } from "@/lib/sentoo";
+import { DELIVERY_FEE_CENTS } from "@/lib/constants";
 
-const schema = z.object({
-  phone_id: z.string().uuid(),
-  buyer_name: z.string().min(1).max(100),
-  buyer_email: z.string().email(),
-  buyer_phone: z.string().min(5).max(20),
-});
+const schema = z
+  .object({
+    phone_id: z.string().uuid(),
+    buyer_name: z.string().min(1).max(100),
+    buyer_email: z.string().email(),
+    buyer_phone: z.string().min(5).max(20),
+    fulfillment_type: z.enum(["pickup", "delivery"]).default("pickup"),
+    delivery_address: z.string().max(500).optional(),
+  })
+  .refine(
+    (d) => d.fulfillment_type !== "delivery" || (d.delivery_address && d.delivery_address.trim().length > 0),
+    { message: "Delivery address is required for delivery", path: ["delivery_address"] }
+  );
 
 export async function POST(request: NextRequest) {
   try {
@@ -22,7 +30,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const { phone_id, buyer_name, buyer_email, buyer_phone } = parsed.data;
+    const { phone_id, buyer_name, buyer_email, buyer_phone, fulfillment_type, delivery_address } = parsed.data;
     const supabase = createAdminClient();
 
     // Fetch phone and verify it's available
@@ -57,12 +65,16 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    // Calculate total with optional delivery fee
+    const deliveryFeeCents = fulfillment_type === "delivery" ? DELIVERY_FEE_CENTS : 0;
+    const totalCents = phone.price_cents + deliveryFeeCents;
+
     // Create Sentoo transaction
     let sentooResponse;
     try {
       const siteUrl = process.env.NEXT_PUBLIC_SITE_URL!;
       sentooResponse = await createTransaction({
-        amountCents: phone.price_cents,
+        amountCents: totalCents,
         description: `HSO - ${phone.brand} ${phone.model}`.slice(0, 50),
         customerRef: buyer_email,
         returnUrl: `${siteUrl}/payment/return?phone_id=${phone_id}&status=`,
@@ -91,7 +103,10 @@ export async function POST(request: NextRequest) {
       buyer_name,
       buyer_email,
       buyer_phone,
-      amount_cents: phone.price_cents,
+      amount_cents: totalCents,
+      fulfillment_type,
+      delivery_address: delivery_address?.trim() || null,
+      delivery_fee_cents: deliveryFeeCents,
       sentoo_tx_id: txId,
       sentoo_payment_url: paymentUrl,
       sentoo_qr_url: qrCode,

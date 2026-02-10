@@ -27,11 +27,20 @@ export async function sendSMS(order: Order, phone: Phone) {
   });
 }
 
-export async function sendEmail(order: Order, phone: Phone) {
+export async function sendEmail(
+  order: Order,
+  phone: Phone,
+  invoiceUrl?: string,
+  fulfillmentType?: "pickup" | "delivery"
+) {
   if (!resend) {
     console.warn("Resend not configured, skipping email");
     return;
   }
+
+  const invoiceButton = invoiceUrl
+    ? `<a href="${invoiceUrl}" style="display: inline-block; background: #1a1a1a; color: #ffffff; padding: 12px 24px; border-radius: 6px; text-decoration: none; margin-top: 16px;">Download Invoice</a>`
+    : "";
 
   await resend.emails.send({
     from: "HSO <noreply@connectionscuracao.net>",
@@ -49,7 +58,8 @@ export async function sendEmail(order: Order, phone: Phone) {
           <p style="margin: 0 0 8px;"><strong>Amount:</strong> ${formatCurrency(order.amount_cents)}</p>
           <p style="margin: 0;"><strong>Order ID:</strong> ${order.id.slice(0, 8)}</p>
         </div>
-        <p>Please visit our store to pick up your phone. Bring this email as your receipt.</p>
+        ${invoiceButton}
+        <p>${fulfillmentType === "delivery" ? "We will arrange delivery to your provided address." : "Please visit our store to pick up your phone. Bring this email as your receipt."}</p>
         <p>Thank you for shopping with HSO!</p>
       </div>
     `,
@@ -87,16 +97,16 @@ export async function sendWhatsApp(
 export async function sendAllNotifications(
   order: Order,
   phone: Phone,
-  invoiceUrl?: string
+  invoiceUrl?: string,
+  fulfillmentType?: "pickup" | "delivery"
 ) {
   const results = await Promise.allSettled([
-    sendSMS(order, phone),
-    sendEmail(order, phone),
+    sendEmail(order, phone, invoiceUrl, fulfillmentType),
     sendWhatsApp(order, phone, invoiceUrl),
   ]);
 
   results.forEach((result, i) => {
-    const names = ["SMS", "Email", "WhatsApp"];
+    const names = ["Email", "WhatsApp"];
     if (result.status === "rejected") {
       console.error(`Failed to send ${names[i]}:`, result.reason);
     }

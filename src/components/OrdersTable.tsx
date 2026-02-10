@@ -60,6 +60,7 @@ export function OrdersTable({ orders }: { orders: Order[] }) {
             <TableHead>Order ID</TableHead>
             <TableHead>Phone</TableHead>
             <TableHead>Buyer</TableHead>
+            <TableHead>Type</TableHead>
             <TableHead>Amount</TableHead>
             <TableHead>Payment</TableHead>
             <TableHead>Date</TableHead>
@@ -70,7 +71,7 @@ export function OrdersTable({ orders }: { orders: Order[] }) {
           {orders.length === 0 ? (
             <TableRow>
               <TableCell
-                colSpan={7}
+                colSpan={8}
                 className="text-center py-8 text-muted-foreground"
               >
                 No orders yet.
@@ -90,6 +91,18 @@ export function OrdersTable({ orders }: { orders: Order[] }) {
                       {order.buyer_email}
                     </p>
                   </div>
+                </TableCell>
+                <TableCell>
+                  <Badge
+                    variant="outline"
+                    className={
+                      order.fulfillment_type === "delivery"
+                        ? "border-blue-300 text-blue-700 dark:border-blue-700 dark:text-blue-400"
+                        : ""
+                    }
+                  >
+                    {order.fulfillment_type === "delivery" ? "Delivery" : "Pickup"}
+                  </Badge>
                 </TableCell>
                 <TableCell>{formatCurrency(order.amount_cents)}</TableCell>
                 <TableCell>

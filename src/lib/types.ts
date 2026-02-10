@@ -33,6 +33,9 @@ export interface Order {
     | "cancelled"
     | "expired"
     | "manual";
+  fulfillment_type: "pickup" | "delivery";
+  delivery_address: string | null;
+  delivery_fee_cents: number;
   notifications_sent: boolean;
   created_at: string;
   updated_at: string;

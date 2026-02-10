@@ -4,15 +4,18 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { toast } from "sonner";
 import type { Phone } from "@/lib/types";
 import { formatCurrency } from "@/lib/utils";
-import { Loader2, CreditCard, QrCode } from "lucide-react";
+import { DELIVERY_FEE_CENTS } from "@/lib/constants";
+import { Loader2, CreditCard, QrCode, Store, Truck } from "lucide-react";
 import Image from "next/image";
 
 export function CheckoutForm({ phone }: { phone: Phone }) {
   const [loading, setLoading] = useState(false);
+  const [fulfillmentType, setFulfillmentType] = useState<"pickup" | "delivery">("pickup");
   const [paymentData, setPaymentData] = useState<{
     url: string;
     qr_code: string;
@@ -21,7 +24,11 @@ export function CheckoutForm({ phone }: { phone: Phone }) {
     name: "",
     email: "",
     phone: "",
+    deliveryAddress: "",
   });
+
+  const deliveryFee = fulfillmentType === "delivery" ? DELIVERY_FEE_CENTS : 0;
+  const totalCents = phone.price_cents + deliveryFee;
 
   function updateField(field: string, value: string) {
     setFormData((prev) => ({ ...prev, [field]: value }));
@@ -40,6 +47,10 @@ export function CheckoutForm({ phone }: { phone: Phone }) {
           buyer_name: formData.name,
           buyer_email: formData.email,
           buyer_phone: formData.phone,
+          fulfillment_type: fulfillmentType,
+          ...(fulfillmentType === "delivery" && {
+            delivery_address: formData.deliveryAddress,
+          }),
         }),
       });
 
@@ -72,7 +83,7 @@ export function CheckoutForm({ phone }: { phone: Phone }) {
         <CardContent className="space-y-6 text-center">
           <p className="text-muted-foreground">
             Scan the QR code or click the button below to pay{" "}
-            <strong>{formatCurrency(phone.price_cents)}</strong> for your{" "}
+            <strong>{formatCurrency(totalCents)}</strong> for your{" "}
             <strong>{phone.model}</strong>.
           </p>
 
@@ -110,6 +121,52 @@ export function CheckoutForm({ phone }: { phone: Phone }) {
       </CardHeader>
       <CardContent>
         <form onSubmit={handleSubmit} className="space-y-4">
+          {/* Fulfillment type toggle */}
+          <div className="space-y-2">
+            <Label>Fulfillment Method</Label>
+            <div className="grid grid-cols-2 gap-2">
+              <button
+                type="button"
+                onClick={() => setFulfillmentType("pickup")}
+                className={`flex items-center justify-center gap-2 rounded-lg border-2 p-3 text-sm font-medium transition-colors ${
+                  fulfillmentType === "pickup"
+                    ? "border-primary bg-primary/5 text-primary"
+                    : "border-muted hover:border-muted-foreground/30"
+                }`}
+              >
+                <Store className="h-4 w-4" />
+                Store Pickup
+              </button>
+              <button
+                type="button"
+                onClick={() => setFulfillmentType("delivery")}
+                className={`flex items-center justify-center gap-2 rounded-lg border-2 p-3 text-sm font-medium transition-colors ${
+                  fulfillmentType === "delivery"
+                    ? "border-primary bg-primary/5 text-primary"
+                    : "border-muted hover:border-muted-foreground/30"
+                }`}
+              >
+                <Truck className="h-4 w-4" />
+                Delivery (+{formatCurrency(DELIVERY_FEE_CENTS)})
+              </button>
+            </div>
+          </div>
+
+          {/* Delivery address */}
+          {fulfillmentType === "delivery" && (
+            <div className="space-y-2">
+              <Label htmlFor="delivery-address">Delivery Address *</Label>
+              <Textarea
+                id="delivery-address"
+                required
+                value={formData.deliveryAddress}
+                onChange={(e) => updateField("deliveryAddress", e.target.value)}
+                placeholder="Street, neighborhood, city..."
+                rows={3}
+              />
+            </div>
+          )}
+
           <div className="space-y-2">
             <Label htmlFor="name">Full Name *</Label>
             <Input
@@ -142,9 +199,28 @@ export function CheckoutForm({ phone }: { phone: Phone }) {
               placeholder="+5999..."
             />
           </div>
+
+          {/* Price breakdown */}
+          <div className="rounded-lg border bg-muted/50 p-3 space-y-1 text-sm">
+            <div className="flex justify-between">
+              <span>{phone.model}</span>
+              <span>{formatCurrency(phone.price_cents)}</span>
+            </div>
+            {fulfillmentType === "delivery" && (
+              <div className="flex justify-between">
+                <span>Delivery fee</span>
+                <span>{formatCurrency(DELIVERY_FEE_CENTS)}</span>
+              </div>
+            )}
+            <div className="flex justify-between font-semibold border-t pt-1 mt-1">
+              <span>Total</span>
+              <span>{formatCurrency(totalCents)}</span>
+            </div>
+          </div>
+
           <Button type="submit" className="w-full" size="lg" disabled={loading}>
             {loading && <Loader2 className="h-4 w-4 mr-2 animate-spin" />}
-            Pay {formatCurrency(phone.price_cents)}
+            Pay {formatCurrency(totalCents)}
           </Button>
         </form>
       </CardContent>

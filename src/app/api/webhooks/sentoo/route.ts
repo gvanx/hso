@@ -105,7 +105,7 @@ export async function POST(request: NextRequest) {
 
       // Send all notifications (non-blocking)
       try {
-        await sendAllNotifications(order, order.phone, invoiceUrl);
+        await sendAllNotifications(order, order.phone, invoiceUrl, order.fulfillment_type);
       } catch (err) {
         console.error("Notification error:", err);
       }
