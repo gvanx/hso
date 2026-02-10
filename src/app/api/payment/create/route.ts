@@ -60,10 +60,12 @@ export async function POST(request: NextRequest) {
     // Create Sentoo transaction
     let sentooResponse;
     try {
+      const siteUrl = process.env.NEXT_PUBLIC_SITE_URL!;
       sentooResponse = await createTransaction({
         amountCents: phone.price_cents,
         description: `HSO - ${phone.brand} ${phone.model}`.slice(0, 50),
         customerRef: buyer_email,
+        returnUrl: `${siteUrl}/payment/return?phone_id=${phone_id}&status=`,
       });
     } catch (err) {
       // Revert reservation on Sentoo failure

@@ -9,13 +9,14 @@ export async function createTransaction(opts: {
   amountCents: number;
   description: string;
   customerRef?: string;
+  returnUrl?: string;
 }): Promise<SentooCreateResponse> {
   const body = new URLSearchParams({
     sentoo_merchant: SENTOO_MERCHANT_ID,
     sentoo_amount: String(opts.amountCents),
     sentoo_description: opts.description.slice(0, 50),
     sentoo_currency: "XCG",
-    sentoo_return_url: `${SITE_URL}/payment/return?status=`,
+    sentoo_return_url: opts.returnUrl || `${SITE_URL}/payment/return?status=`,
   });
 
   if (opts.customerRef) {
