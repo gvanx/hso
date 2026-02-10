@@ -1,11 +1,21 @@
 export const dynamic = "force-dynamic";
 
+import type { Metadata } from "next";
 import { Suspense } from "react";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import { PhoneGrid } from "@/components/PhoneGrid";
 import { PhoneFilters } from "@/components/PhoneFilters";
+import { Pagination } from "@/components/Pagination";
 import { Smartphone } from "lucide-react";
+
+const PAGE_SIZE = 12;
+
+export const metadata: Metadata = {
+  title: "Browse Phones | HSO",
+  description:
+    "Browse quality second-hand phones in Curaçao. Filter by brand, grade, and price.",
+};
 
 export default async function PhonesPage({
   searchParams,
@@ -15,9 +25,13 @@ export default async function PhonesPage({
   const params = await searchParams;
   const supabase = await createClient();
 
+  const currentPage = Math.max(1, parseInt(params.page || "1", 10) || 1);
+  const from = (currentPage - 1) * PAGE_SIZE;
+  const to = from + PAGE_SIZE - 1;
+
   let query = supabase
     .from("phones")
-    .select("*")
+    .select("*", { count: "exact" })
     .eq("status", "available");
 
   if (params.search) {
@@ -45,7 +59,9 @@ export default async function PhonesPage({
       query = query.order("created_at", { ascending: false });
   }
 
-  const { data: phones } = await query;
+  const { data: phones, count } = await query.range(from, to);
+
+  const totalPages = Math.ceil((count || 0) / PAGE_SIZE);
 
   const { data: brandData } = await supabase
     .from("phones")
@@ -79,6 +95,10 @@ export default async function PhonesPage({
         <div className="mt-8">
           <PhoneGrid phones={phones || []} />
         </div>
+
+        <Suspense fallback={null}>
+          <Pagination currentPage={currentPage} totalPages={totalPages} />
+        </Suspense>
       </main>
     </div>
   );

@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
@@ -12,6 +13,50 @@ import {
   ArrowLeft,
   ShoppingCart,
 } from "lucide-react";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}): Promise<Metadata> {
+  const { id } = await params;
+  const supabase = await createClient();
+
+  const { data: phone } = await supabase
+    .from("phones")
+    .select("model, brand, price_cents, images, description")
+    .eq("id", id)
+    .single();
+
+  if (!phone) {
+    return { title: "Phone Not Found | HSO" };
+  }
+
+  const title = `${phone.brand} ${phone.model} | HSO`;
+  const description =
+    phone.description ||
+    `Buy a ${phone.brand} ${phone.model} for ${formatCurrency(phone.price_cents)} at HSO Curaçao.`;
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "";
+
+  return {
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+      url: `${siteUrl}/phones/${id}`,
+      ...(phone.images?.[0] && {
+        images: [{ url: phone.images[0], alt: `${phone.brand} ${phone.model}` }],
+      }),
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      ...(phone.images?.[0] && { images: [phone.images[0]] }),
+    },
+  };
+}
 
 export default async function PhoneDetailPage({
   params,

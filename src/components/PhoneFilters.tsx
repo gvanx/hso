@@ -36,6 +36,7 @@ export function PhoneFilters({ brands }: { brands?: string[] }) {
     } else {
       params.delete(key);
     }
+    params.delete("page");
     router.push(`/phones?${params.toString()}`);
   }
 
