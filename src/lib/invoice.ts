@@ -295,15 +295,21 @@ function buildDocument(order: Order, phone: Phone) {
           e(
             View,
             { style: styles.totalRow },
-            e(Text, { style: styles.totalLabel }, "Subtotal"),
-            e(Text, { style: styles.totalValue }, fmt(phone.price_cents))
+            e(Text, { style: styles.totalLabel }, "Subtotal (ex. OB)"),
+            e(Text, { style: styles.totalValue }, fmt(Math.round(order.amount_cents / 1.06)))
+          ),
+          e(
+            View,
+            { style: styles.totalRow },
+            e(Text, { style: styles.totalLabel }, "OB 6%"),
+            e(Text, { style: styles.totalValue }, fmt(order.amount_cents - Math.round(order.amount_cents / 1.06)))
           ),
           ...(order.delivery_fee_cents > 0
             ? [
                 e(
                   View,
                   { key: "deltot", style: styles.totalRow },
-                  e(Text, { style: styles.totalLabel }, "Delivery"),
+                  e(Text, { style: styles.totalLabel }, "Incl. Delivery"),
                   e(Text, { style: styles.totalValue }, fmt(order.delivery_fee_cents))
                 ),
               ]
@@ -311,7 +317,7 @@ function buildDocument(order: Order, phone: Phone) {
           e(
             View,
             { style: styles.grandTotalRow },
-            e(Text, { style: styles.grandTotalLabel }, "Total"),
+            e(Text, { style: styles.grandTotalLabel }, "Total (incl. OB)"),
             e(Text, { style: styles.grandTotalValue }, fmt(order.amount_cents))
           )
         )
