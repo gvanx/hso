@@ -21,7 +21,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { createClient } from "@/lib/supabase/client";
-import { formatCurrency, getStatusColor, getGradeColor } from "@/lib/utils";
+import { formatCurrency, formatStorage, getStatusColor, getGradeColor } from "@/lib/utils";
 import { toast } from "sonner";
 import type { Phone } from "@/lib/types";
 import { MoreHorizontal, Pencil, Trash2, Smartphone, XCircle, ShoppingBag } from "lucide-react";
@@ -133,7 +133,9 @@ export function AdminPhoneTable({ phones }: { phones: Phone[] }) {
                     </div>
                   )}
                 </TableCell>
-                <TableCell className="font-medium">{phone.model}</TableCell>
+                <TableCell className="font-medium">
+                  {phone.model}{phone.storage_gb ? ` ${formatStorage(phone.storage_gb)}` : ""}
+                </TableCell>
                 <TableCell>{phone.brand}</TableCell>
                 <TableCell>{formatCurrency(phone.price_cents)}</TableCell>
                 <TableCell>

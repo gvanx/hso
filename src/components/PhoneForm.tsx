@@ -35,6 +35,7 @@ export function PhoneForm({ phone }: PhoneFormProps) {
     brand: phone?.brand || "",
     price: phone ? (phone.price_cents / 100).toFixed(2) : "",
     color: phone?.color || "",
+    storage_gb: phone?.storage_gb?.toString() || "",
     battery_pct: phone?.battery_pct?.toString() || "",
     reference: phone?.reference || "",
     grade: phone?.grade || "",
@@ -62,6 +63,9 @@ export function PhoneForm({ phone }: PhoneFormProps) {
       brand: formData.brand,
       price_cents: priceCents,
       color: formData.color || null,
+      storage_gb: formData.storage_gb
+        ? parseInt(formData.storage_gb)
+        : null,
       battery_pct: formData.battery_pct
         ? parseInt(formData.battery_pct)
         : null,
@@ -140,6 +144,26 @@ export function PhoneForm({ phone }: PhoneFormProps) {
             onChange={(e) => updateField("color", e.target.value)}
             placeholder="e.g. Space Gray"
           />
+        </div>
+        <div className="space-y-2">
+          <Label htmlFor="storage_gb">Storage</Label>
+          <Select
+            value={formData.storage_gb || "none"}
+            onValueChange={(v) => updateField("storage_gb", v === "none" ? "" : v)}
+          >
+            <SelectTrigger>
+              <SelectValue placeholder="Select storage" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="none">No storage</SelectItem>
+              <SelectItem value="64">64 GB</SelectItem>
+              <SelectItem value="128">128 GB</SelectItem>
+              <SelectItem value="256">256 GB</SelectItem>
+              <SelectItem value="512">512 GB</SelectItem>
+              <SelectItem value="1024">1 TB</SelectItem>
+              <SelectItem value="2048">2 TB</SelectItem>
+            </SelectContent>
+          </Select>
         </div>
         <div className="space-y-2">
           <Label htmlFor="battery_pct">Battery %</Label>

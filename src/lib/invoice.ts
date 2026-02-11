@@ -164,6 +164,20 @@ function buildDocument(order: Order, phone: Phone) {
             `${phone.brand} ${phone.model}`
           )
         ),
+        ...(phone.storage_gb
+          ? [
+              React.createElement(
+                View,
+                { key: "storage", style: styles.row },
+                React.createElement(Text, { style: styles.label }, "Storage:"),
+                React.createElement(
+                  Text,
+                  { style: styles.value },
+                  phone.storage_gb >= 1024 ? `${phone.storage_gb / 1024}TB` : `${phone.storage_gb}GB`
+                )
+              ),
+            ]
+          : []),
         React.createElement(
           View,
           { style: styles.row },

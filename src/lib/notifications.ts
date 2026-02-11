@@ -52,7 +52,7 @@ export async function sendEmail(
         <p>Hi ${order.buyer_name},</p>
         <p>Your purchase has been confirmed!</p>
         <div style="background: #f5f5f5; padding: 20px; border-radius: 8px; margin: 20px 0;">
-          <p style="margin: 0 0 8px;"><strong>Phone:</strong> ${phone.model}</p>
+          <p style="margin: 0 0 8px;"><strong>Phone:</strong> ${phone.model}${phone.storage_gb ? ` ${phone.storage_gb >= 1024 ? `${phone.storage_gb / 1024}TB` : `${phone.storage_gb}GB`}` : ""}</p>
           <p style="margin: 0 0 8px;"><strong>Color:</strong> ${phone.color || "N/A"}</p>
           <p style="margin: 0 0 8px;"><strong>Grade:</strong> ${phone.grade || "N/A"}</p>
           <p style="margin: 0 0 8px;"><strong>Amount:</strong> ${formatCurrency(order.amount_cents)}</p>
@@ -101,12 +101,13 @@ export async function sendAllNotifications(
   fulfillmentType?: "pickup" | "delivery"
 ) {
   const results = await Promise.allSettled([
+    sendSMS(order, phone),
     sendEmail(order, phone, invoiceUrl, fulfillmentType),
     sendWhatsApp(order, phone, invoiceUrl),
   ]);
 
   results.forEach((result, i) => {
-    const names = ["Email", "WhatsApp"];
+    const names = ["SMS", "Email", "WhatsApp"];
     if (result.status === "rejected") {
       console.error(`Failed to send ${names[i]}:`, result.reason);
     }

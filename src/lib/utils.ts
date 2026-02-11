@@ -82,6 +82,11 @@ export function getPhoneColorHex(color: string | null): string | null {
   return COLOR_MAP[color.toLowerCase().trim()] || null;
 }
 
+export function formatStorage(gb: number): string {
+  if (gb >= 1024) return `${gb / 1024}TB`;
+  return `${gb}GB`;
+}
+
 export function getStatusColor(status: string): string {
   switch (status) {
     case "available":

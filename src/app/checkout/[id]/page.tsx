@@ -3,7 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { createClient } from "@/lib/supabase/server";
 import { CheckoutForm } from "@/components/CheckoutForm";
-import { formatCurrency } from "@/lib/utils";
+import { formatCurrency, formatStorage } from "@/lib/utils";
 import { Smartphone, ArrowLeft } from "lucide-react";
 
 export default async function CheckoutPage({
@@ -84,7 +84,9 @@ export default async function CheckoutPage({
               </div>
               <div className="flex-1">
                 <p className="text-xs text-muted-foreground">{phone.brand}</p>
-                <p className="font-semibold">{phone.model}</p>
+                <p className="font-semibold">
+                  {phone.model}{phone.storage_gb ? ` ${formatStorage(phone.storage_gb)}` : ""}
+                </p>
                 {phone.color && (
                   <p className="text-xs text-muted-foreground">{phone.color}</p>
                 )}

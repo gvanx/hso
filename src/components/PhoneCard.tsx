@@ -2,7 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { formatCurrency, getGradeColor, getPhoneColorHex } from "@/lib/utils";
+import { formatCurrency, formatStorage, getGradeColor, getPhoneColorHex } from "@/lib/utils";
 import type { Phone } from "@/lib/types";
 import { Battery, Smartphone } from "lucide-react";
 
@@ -36,7 +36,9 @@ export function PhoneCard({ phone }: { phone: Phone }) {
           <p className="text-xs text-muted-foreground uppercase tracking-wide">
             {phone.brand}
           </p>
-          <h3 className="font-semibold mt-1 line-clamp-1">{phone.model}</h3>
+          <h3 className="font-semibold mt-1 line-clamp-1">
+            {phone.model}{phone.storage_gb ? ` ${formatStorage(phone.storage_gb)}` : ""}
+          </h3>
           <div className="flex items-center justify-between mt-3">
             <span className="text-lg font-bold">
               {formatCurrency(phone.price_cents)}

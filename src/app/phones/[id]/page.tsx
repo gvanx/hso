@@ -5,7 +5,7 @@ import Image from "next/image";
 import { createClient } from "@/lib/supabase/server";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { formatCurrency, getGradeLabel, getGradeColor, getPhoneColorHex } from "@/lib/utils";
+import { formatCurrency, formatStorage, getGradeLabel, getGradeColor, getPhoneColorHex } from "@/lib/utils";
 import {
   Smartphone,
   Battery,
@@ -142,7 +142,9 @@ export default async function PhoneDetailPage({
             <p className="text-sm text-muted-foreground uppercase tracking-wide">
               {phone.brand}
             </p>
-            <h1 className="text-3xl font-bold mt-1">{phone.model}</h1>
+            <h1 className="text-3xl font-bold mt-1">
+              {phone.model}{phone.storage_gb ? ` ${formatStorage(phone.storage_gb)}` : ""}
+            </h1>
 
             <div className="flex items-center gap-2 mt-4">
               <span className="text-3xl font-bold">
@@ -165,6 +167,12 @@ export default async function PhoneDetailPage({
                       {getGradeLabel(phone.grade)}
                     </span>
                   </span>
+                </div>
+              )}
+              {phone.storage_gb != null && (
+                <div className="flex items-center gap-3">
+                  <Smartphone className="h-4 w-4 text-muted-foreground" />
+                  <span className="text-sm">Storage: {formatStorage(phone.storage_gb)}</span>
                 </div>
               )}
               {phone.battery_pct != null && (

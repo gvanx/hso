@@ -4,6 +4,7 @@ export interface Phone {
   brand: string;
   price_cents: number;
   color: string | null;
+  storage_gb: number | null;
   battery_pct: number | null;
   reference: string | null;
   grade: string | null;
