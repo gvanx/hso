@@ -20,7 +20,7 @@ const statusConfig: Record<
     icon: CheckCircle,
     title: "Payment Successful!",
     message:
-      "Your payment has been received. You will receive a confirmation via SMS, email, and WhatsApp shortly.",
+      "Your payment has been received. You will receive a confirmation email shortly.",
     color: "text-green-600",
   },
   pending: {
