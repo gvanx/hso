@@ -46,6 +46,16 @@ export async function POST(request: NextRequest) {
     try {
       const statusResponse = await fetchTransactionStatus(transactionId);
       sentooStatus = statusResponse.success.message;
+
+      // When the transaction is still "issued" but the latest payment attempt
+      // was cancelled/rejected, use the attempt status instead
+      const responses = statusResponse.success.data?.responses;
+      if (sentooStatus === "issued" && responses && responses.length > 0) {
+        const attemptStatus = responses[responses.length - 1].status?.toLowerCase();
+        if (attemptStatus === "cancelled" || attemptStatus === "rejected" || attemptStatus === "failed") {
+          sentooStatus = attemptStatus;
+        }
+      }
     } catch (err) {
       console.error("Failed to fetch Sentoo status:", err);
       // Return non-200 so Sentoo retries

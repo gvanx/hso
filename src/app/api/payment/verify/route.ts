@@ -46,7 +46,17 @@ export async function GET(request: NextRequest) {
     // Extract the latest processor response message (if any)
     const responses = statusResponse.success.data?.responses;
     if (responses && responses.length > 0) {
-      processorMessage = responses[responses.length - 1].message;
+      const lastAttempt = responses[responses.length - 1];
+      processorMessage = lastAttempt.message;
+
+      // When the transaction is still "issued" but the latest payment attempt
+      // was cancelled/rejected, use the attempt status instead
+      if (sentooStatus === "issued" && lastAttempt.status) {
+        const attemptStatus = lastAttempt.status.toLowerCase();
+        if (attemptStatus === "cancelled" || attemptStatus === "rejected" || attemptStatus === "failed") {
+          sentooStatus = attemptStatus;
+        }
+      }
     }
   } catch (err) {
     console.error("Verify: failed to fetch Sentoo status:", err);
