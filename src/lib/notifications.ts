@@ -101,13 +101,13 @@ export async function sendAllNotifications(
   fulfillmentType?: "pickup" | "delivery"
 ) {
   const results = await Promise.allSettled([
-    sendSMS(order, phone),
     sendEmail(order, phone, invoiceUrl, fulfillmentType),
-    sendWhatsApp(order, phone, invoiceUrl),
+    // sendSMS(order, phone),       // TODO: enable when Twilio SMS is verified
+    // sendWhatsApp(order, phone, invoiceUrl), // TODO: enable when WhatsApp Business is set up
   ]);
 
   results.forEach((result, i) => {
-    const names = ["SMS", "Email", "WhatsApp"];
+    const names = ["Email"];
     if (result.status === "rejected") {
       console.error(`Failed to send ${names[i]}:`, result.reason);
     }
