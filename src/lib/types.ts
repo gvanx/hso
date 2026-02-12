@@ -9,6 +9,8 @@ export interface Phone {
   reference: string | null;
   grade: string | null;
   description: string | null;
+  warranty_type: "standard_3m" | "apple_3m" | "other" | null;
+  warranty_text: string | null;
   images: string[];
   status: "available" | "reserved" | "sold";
   created_at: string;

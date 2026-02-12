@@ -94,6 +94,54 @@ export async function sendWhatsApp(
   await twilioClient.messages.create(messageOpts);
 }
 
+function warrantyLabel(phone: Phone): string {
+  if (phone.warranty_type === "standard_3m") return "Standard 3 Months";
+  if (phone.warranty_type === "apple_3m") return "3 Months + Apple Warranty";
+  if (phone.warranty_type === "other") return phone.warranty_text || "Other";
+  return "None";
+}
+
+export async function sendStoreNotification(
+  order: Order,
+  phone: Phone,
+  invoiceUrl?: string
+) {
+  if (!resend) {
+    console.warn("Resend not configured, skipping store notification");
+    return;
+  }
+
+  const invoiceLink = invoiceUrl
+    ? `<p><a href="${invoiceUrl}" style="color: #2563eb;">View Invoice</a></p>`
+    : "";
+
+  await resend.emails.send({
+    from: "HSO <noreply@connectionscuracao.net>",
+    to: ["info@connectionscuracao.net"],
+    subject: `Phone Sold - ${phone.brand} ${phone.model} - Order #${order.id.slice(0, 8)}`,
+    html: `
+      <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto;">
+        <h1 style="color: #1a1a1a;">Phone Sold</h1>
+        <div style="background: #f5f5f5; padding: 20px; border-radius: 8px; margin: 20px 0;">
+          <h3 style="margin: 0 0 12px;">Order Details</h3>
+          <p style="margin: 0 0 8px;"><strong>Order ID:</strong> ${order.id.slice(0, 8)}</p>
+          <p style="margin: 0 0 8px;"><strong>Phone:</strong> ${phone.brand} ${phone.model}${phone.storage_gb ? ` ${phone.storage_gb >= 1024 ? `${phone.storage_gb / 1024}TB` : `${phone.storage_gb}GB`}` : ""}${phone.color ? ` - ${phone.color}` : ""}</p>
+          <p style="margin: 0 0 8px;"><strong>Amount:</strong> ${formatCurrency(order.amount_cents)}</p>
+          <p style="margin: 0 0 8px;"><strong>Fulfillment:</strong> ${order.fulfillment_type === "delivery" ? "Delivery" : "Store Pickup"}</p>
+          <p style="margin: 0 0 8px;"><strong>Warranty:</strong> ${warrantyLabel(phone)}</p>
+          <hr style="border: none; border-top: 1px solid #ddd; margin: 12px 0;" />
+          <h3 style="margin: 0 0 12px;">Buyer</h3>
+          <p style="margin: 0 0 8px;"><strong>Name:</strong> ${order.buyer_name}</p>
+          <p style="margin: 0 0 8px;"><strong>Email:</strong> ${order.buyer_email}</p>
+          <p style="margin: 0 0 8px;"><strong>Phone:</strong> ${order.buyer_phone}</p>
+          ${order.delivery_address ? `<p style="margin: 0 0 8px;"><strong>Address:</strong> ${order.delivery_address}</p>` : ""}
+        </div>
+        ${invoiceLink}
+      </div>
+    `,
+  });
+}
+
 export async function sendAllNotifications(
   order: Order,
   phone: Phone,
@@ -102,12 +150,13 @@ export async function sendAllNotifications(
 ) {
   const results = await Promise.allSettled([
     sendEmail(order, phone, invoiceUrl, fulfillmentType),
+    sendStoreNotification(order, phone, invoiceUrl),
     // sendSMS(order, phone),       // TODO: enable when Twilio SMS is verified
     // sendWhatsApp(order, phone, invoiceUrl), // TODO: enable when WhatsApp Business is set up
   ]);
 
   results.forEach((result, i) => {
-    const names = ["Email"];
+    const names = ["Email", "Store Notification"];
     if (result.status === "rejected") {
       console.error(`Failed to send ${names[i]}:`, result.reason);
     }

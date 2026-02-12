@@ -323,6 +323,26 @@ function buildDocument(order: Order, phone: Phone) {
         )
       ),
 
+      // ---- Warranty ----
+      ...(phone.warranty_type
+        ? [
+            e(
+              View,
+              { key: "warranty", style: { marginTop: 24 } },
+              e(Text, { style: { ...styles.infoLabel, marginBottom: 6 } }, "Warranty"),
+              e(
+                Text,
+                { style: { fontSize: 9, lineHeight: 1.6, color: colors.muted } },
+                phone.warranty_type === "standard_3m"
+                  ? "This device comes with a 3-month warranty from Connections Punda covering manufacturing defects and hardware malfunctions. Does not cover physical damage, water damage, or unauthorized modifications."
+                  : phone.warranty_type === "apple_3m"
+                    ? "This device comes with a 3-month warranty from Connections Punda plus Apple manufacturer warranty. Covers manufacturing defects and hardware malfunctions per Apple's standard terms. Does not cover physical damage, water damage, or unauthorized modifications."
+                    : phone.warranty_text || ""
+              )
+            ),
+          ]
+        : []),
+
       // ---- Footer ----
       e(
         View,

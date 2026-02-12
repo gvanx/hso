@@ -40,6 +40,8 @@ export function PhoneForm({ phone }: PhoneFormProps) {
     reference: phone?.reference || "",
     grade: phone?.grade || "",
     description: phone?.description || "",
+    warranty_type: phone?.warranty_type || "",
+    warranty_text: phone?.warranty_text || "",
     status: phone?.status || "available",
   });
 
@@ -72,6 +74,8 @@ export function PhoneForm({ phone }: PhoneFormProps) {
       reference: formData.reference || null,
       grade: formData.grade || null,
       description: formData.description || null,
+      warranty_type: formData.warranty_type || null,
+      warranty_text: formData.warranty_type === "other" ? (formData.warranty_text || null) : null,
       images,
       status: formData.status,
     };
@@ -236,6 +240,38 @@ export function PhoneForm({ phone }: PhoneFormProps) {
           placeholder="Optional description..."
           rows={3}
         />
+      </div>
+
+      <div className="space-y-4">
+        <div className="space-y-2">
+          <Label htmlFor="warranty_type">Warranty</Label>
+          <Select
+            value={formData.warranty_type || "none"}
+            onValueChange={(v) => updateField("warranty_type", v === "none" ? "" : v)}
+          >
+            <SelectTrigger>
+              <SelectValue placeholder="Select warranty" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="none">No warranty</SelectItem>
+              <SelectItem value="standard_3m">Standard 3 Months</SelectItem>
+              <SelectItem value="apple_3m">3 Months + Apple Warranty</SelectItem>
+              <SelectItem value="other">Other</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
+        {formData.warranty_type === "other" && (
+          <div className="space-y-2">
+            <Label htmlFor="warranty_text">Warranty Details</Label>
+            <Textarea
+              id="warranty_text"
+              value={formData.warranty_text}
+              onChange={(e) => updateField("warranty_text", e.target.value)}
+              placeholder="Describe the warranty coverage..."
+              rows={3}
+            />
+          </div>
+        )}
       </div>
 
       <div className="space-y-2">
