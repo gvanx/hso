@@ -12,6 +12,7 @@ import {
   Tag,
   ArrowLeft,
   ShoppingCart,
+  ShieldCheck,
 } from "lucide-react";
 
 export async function generateMetadata({
@@ -190,6 +191,19 @@ export default async function PhoneDetailPage({
                     style={getPhoneColorHex(phone.color) ? { backgroundColor: getPhoneColorHex(phone.color)! } : { backgroundColor: '#d1d5db' }}
                   />
                   <span className="text-sm">Color: {phone.color}</span>
+                </div>
+              )}
+              {phone.warranty_type && (
+                <div className="flex items-center gap-3">
+                  <ShieldCheck className="h-4 w-4 text-muted-foreground" />
+                  <span className="text-sm">
+                    Warranty:{" "}
+                    {phone.warranty_type === "standard_3m"
+                      ? "Standard 3 Months"
+                      : phone.warranty_type === "apple_3m"
+                        ? "3 Months + Apple Warranty"
+                        : phone.warranty_text || "Other"}
+                  </span>
                 </div>
               )}
             </div>
