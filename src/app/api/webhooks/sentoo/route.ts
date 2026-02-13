@@ -46,16 +46,6 @@ export async function POST(request: NextRequest) {
     try {
       const statusResponse = await fetchTransactionStatus(transactionId);
       sentooStatus = statusResponse.success.message;
-
-      // When the transaction is still "issued" but the latest payment attempt
-      // was cancelled/rejected, use the attempt status instead
-      const responses = statusResponse.success.data?.responses;
-      if (sentooStatus === "issued" && responses && responses.length > 0) {
-        const attemptStatus = responses[responses.length - 1].status?.toLowerCase();
-        if (attemptStatus === "cancelled" || attemptStatus === "rejected" || attemptStatus === "failed") {
-          sentooStatus = attemptStatus;
-        }
-      }
     } catch (err) {
       console.error("Failed to fetch Sentoo status:", err);
       // Return non-200 so Sentoo retries
@@ -65,7 +55,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Map Sentoo status to our payment_status
+    // Map Sentoo transaction-level status to our payment_status
     const statusMap: Record<string, string> = {
       success: "success",
       pending: "pending",
@@ -77,7 +67,23 @@ export async function POST(request: NextRequest) {
     };
     const paymentStatus = statusMap[sentooStatus] || sentooStatus;
 
-    // Update order payment status
+    // If the transaction is still "issued", individual attempts may have
+    // failed/cancelled/rejected but the transaction remains open for retry.
+    // Don't update the order to a terminal status — keep it as "issued".
+    if (paymentStatus === "issued" && order.payment_status !== "issued") {
+      await supabase
+        .from("orders")
+        .update({ payment_status: "issued" })
+        .eq("id", order.id);
+      return NextResponse.json({ success: true }, { status: 200 });
+    }
+
+    if (paymentStatus === "issued") {
+      // Already "issued" — nothing to change
+      return NextResponse.json({ success: true }, { status: 200 });
+    }
+
+    // Update order payment status for final statuses
     await supabase
       .from("orders")
       .update({ payment_status: paymentStatus })

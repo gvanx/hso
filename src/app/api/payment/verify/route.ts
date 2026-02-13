@@ -40,6 +40,7 @@ export async function GET(request: NextRequest) {
   // Poll Sentoo for the real status
   let sentooStatus: string;
   let processorMessage: string | undefined;
+  let attemptStatus: string | undefined;
   try {
     const statusResponse = await fetchTransactionStatus(order.sentoo_tx_id);
     sentooStatus = statusResponse.success.message;
@@ -49,12 +50,11 @@ export async function GET(request: NextRequest) {
       const lastAttempt = responses[responses.length - 1];
       processorMessage = lastAttempt.message;
 
-      // When the transaction is still "issued" but the latest payment attempt
-      // was cancelled/rejected, use the attempt status instead
+      // Track the latest attempt status separately (don't override transaction status)
       if (sentooStatus === "issued" && lastAttempt.status) {
-        const attemptStatus = lastAttempt.status.toLowerCase();
-        if (attemptStatus === "cancelled" || attemptStatus === "rejected" || attemptStatus === "failed") {
-          sentooStatus = attemptStatus;
+        const s = lastAttempt.status.toLowerCase();
+        if (s === "cancelled" || s === "rejected" || s === "failed") {
+          attemptStatus = s;
         }
       }
     }
@@ -75,9 +75,26 @@ export async function GET(request: NextRequest) {
   };
   const paymentStatus = statusMap[sentooStatus] || sentooStatus;
 
+  // If the transaction is still "issued" but the latest attempt failed/cancelled/rejected,
+  // return the attempt status for display but keep the transaction open for retry
+  if (paymentStatus === "issued" && attemptStatus) {
+    const displayStatus = attemptStatus === "rejected" ? "failed" : attemptStatus;
+    return NextResponse.json({
+      status: displayStatus,
+      retryable: true,
+      sentoo_payment_url: order.sentoo_payment_url,
+      ...(processorMessage && { processor_message: processorMessage }),
+    });
+  }
+
   // No change — return current
   if (paymentStatus === order.payment_status) {
-    return NextResponse.json({ status: paymentStatus, ...(processorMessage && { processor_message: processorMessage }) });
+    return NextResponse.json({
+      status: paymentStatus,
+      ...(processorMessage && { processor_message: processorMessage }),
+      // For non-final statuses, include the payment URL for retry
+      ...(paymentStatus !== "success" && order.sentoo_payment_url && { sentoo_payment_url: order.sentoo_payment_url }),
+    });
   }
 
   // Update order status
@@ -137,5 +154,10 @@ export async function GET(request: NextRequest) {
       .eq("id", order.phone_id);
   }
 
-  return NextResponse.json({ status: paymentStatus, ...(processorMessage && { processor_message: processorMessage }) });
+  return NextResponse.json({
+    status: paymentStatus,
+    ...(processorMessage && { processor_message: processorMessage }),
+    // For non-final statuses, include the payment URL for retry
+    ...(paymentStatus !== "success" && order.sentoo_payment_url && { sentoo_payment_url: order.sentoo_payment_url }),
+  });
 }

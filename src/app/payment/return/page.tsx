@@ -64,6 +64,7 @@ function PaymentReturnContent() {
   const urlStatus = searchParams.get("status") || "unknown";
   const [verifiedStatus, setVerifiedStatus] = useState<string | null>(null);
   const [processorMessage, setProcessorMessage] = useState<string | null>(null);
+  const [retryUrl, setRetryUrl] = useState<string | null>(null);
   const [polling, setPolling] = useState(false);
 
   useEffect(() => {
@@ -81,6 +82,9 @@ function PaymentReturnContent() {
         setVerifiedStatus(data.status);
         if (data.processor_message) {
           setProcessorMessage(data.processor_message);
+        }
+        if (data.sentoo_payment_url) {
+          setRetryUrl(data.sentoo_payment_url);
         }
 
         // Stop polling if status is final
@@ -150,9 +154,14 @@ function PaymentReturnContent() {
           </div>
         )}
         <div className="flex flex-col gap-2">
-          {status !== "success" && phoneId && (
+          {status !== "success" && retryUrl && (
             <Button asChild>
-              <Link href={`/phones/${phoneId}`}>Try Again</Link>
+              <a href={retryUrl}>Try Again</a>
+            </Button>
+          )}
+          {status !== "success" && !retryUrl && phoneId && (
+            <Button asChild>
+              <Link href={`/phones/${phoneId}`}>Start New Payment</Link>
             </Button>
           )}
           <Button asChild variant={status === "success" ? "default" : "outline"}>
