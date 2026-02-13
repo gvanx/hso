@@ -65,14 +65,16 @@ function PaymentReturnContent() {
   const [verifiedStatus, setVerifiedStatus] = useState<string | null>(null);
   const [processorMessage, setProcessorMessage] = useState<string | null>(null);
   const [retryUrl, setRetryUrl] = useState<string | null>(null);
-  const [polling, setPolling] = useState(false);
+  const [polling, setPolling] = useState(true);
 
   useEffect(() => {
-    if (!phoneId) return;
+    if (!phoneId) {
+      setPolling(false);
+      return;
+    }
 
     let attempts = 0;
     const maxAttempts = 10;
-    setPolling(true);
 
     async function verify() {
       try {
@@ -87,12 +89,14 @@ function PaymentReturnContent() {
           setRetryUrl(data.sentoo_payment_url);
         }
 
-        // Stop polling if status is final
+        // Stop polling if status is final (but keep polling for retryable statuses
+        // since the transaction is still open and a retry payment may be processing)
         if (
-          data.status === "success" ||
+          !data.retryable &&
+          (data.status === "success" ||
           data.status === "failed" ||
           data.status === "cancelled" ||
-          data.status === "expired"
+          data.status === "expired")
         ) {
           setPolling(false);
           return;

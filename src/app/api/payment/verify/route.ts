@@ -104,43 +104,48 @@ export async function GET(request: NextRequest) {
     .eq("id", order.id);
 
   // Handle success: mark phone as sold, send notifications
-  if (paymentStatus === "success" && !order.notifications_sent) {
-    await supabase
-      .from("phones")
-      .update({ status: "sold" })
-      .eq("id", order.phone_id);
-
-    let invoiceUrl: string | undefined;
-    try {
-      const pdfBuffer = await generateInvoicePdf(order, order.phone);
-      const fileName = `invoices/${order.id}.pdf`;
-
-      await supabase.storage
-        .from("phone-image")
-        .upload(fileName, pdfBuffer, {
-          contentType: "application/pdf",
-          upsert: true,
-        });
-
-      const { data: signedUrlData } = await supabase.storage
-        .from("phone-image")
-        .createSignedUrl(fileName, 60 * 60 * 24 * 7);
-
-      invoiceUrl = signedUrlData?.signedUrl;
-    } catch (err) {
-      console.error("Invoice generation failed:", err);
-    }
-
-    try {
-      await sendAllNotifications(order, order.phone, invoiceUrl, order.fulfillment_type);
-    } catch (err) {
-      console.error("Notification error:", err);
-    }
-
-    await supabase
+  // Use atomic update to prevent duplicate notifications (race with webhook)
+  if (paymentStatus === "success") {
+    const { data: claimed } = await supabase
       .from("orders")
       .update({ notifications_sent: true })
-      .eq("id", order.id);
+      .eq("id", order.id)
+      .eq("notifications_sent", false)
+      .select("id");
+
+    if (claimed && claimed.length > 0) {
+      await supabase
+        .from("phones")
+        .update({ status: "sold" })
+        .eq("id", order.phone_id);
+
+      let invoiceUrl: string | undefined;
+      try {
+        const pdfBuffer = await generateInvoicePdf(order, order.phone);
+        const fileName = `invoices/${order.id}.pdf`;
+
+        await supabase.storage
+          .from("phone-image")
+          .upload(fileName, pdfBuffer, {
+            contentType: "application/pdf",
+            upsert: true,
+          });
+
+        const { data: signedUrlData } = await supabase.storage
+          .from("phone-image")
+          .createSignedUrl(fileName, 60 * 60 * 24 * 7);
+
+        invoiceUrl = signedUrlData?.signedUrl;
+      } catch (err) {
+        console.error("Invoice generation failed:", err);
+      }
+
+      try {
+        await sendAllNotifications(order, order.phone, invoiceUrl, order.fulfillment_type);
+      } catch (err) {
+        console.error("Notification error:", err);
+      }
+    }
   }
 
   // Handle failed/cancelled/expired: revert phone to available
