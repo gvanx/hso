@@ -1,0 +1,113 @@
+{
+  "common": {
+    "browsePhones": "Mira Telefonnan",
+    "admin": "Admin",
+    "goHome": "Bai Pashina Prinsipal",
+    "continueShopping": "Sigui Kumpra",
+    "total": "Total",
+    "clear": "Limpia",
+    "footer": "HSO - Telefonnan di Segunda Man | Curaçao",
+    "poweredBy": "Powered by Connections Curaçao"
+  },
+  "home": {
+    "heroTitle": "Telefonnan di Segunda Man di Kalidat",
+    "heroDescription": "Haña bo proximo telefon na un prijs bon. Tur telefon ta testá, klasifiká, i kla pa bo. Paga sigur ku Sentoo.",
+    "featureTestedTitle": "Testá i Klasifiká",
+    "featureTestedDesc": "Tur telefon ta inspekshoná i klasifiká pa kalidat",
+    "featurePaymentsTitle": "Pago Sigur",
+    "featurePaymentsDesc": "Paga sigur via e red bankario di Sentoo",
+    "featurePricesTitle": "Prijsnan Bon",
+    "featurePricesDesc": "Telefonnan di kalidat na prijsnan razonabel",
+    "latestPhones": "Telefonnan mas Nobo",
+    "viewAll": "Mira Tur"
+  },
+  "phones": {
+    "title": "Mira Telefonnan",
+    "metaDescription": "Mira telefonnan di segunda man di kalidat na Curaçao. Filtra pa marka, grado, i prijs.",
+    "noResults": "Ningun telefon haña",
+    "noResultsHint": "Purba ahustá bo filtronan",
+    "backToPhones": "Bèk na telefonnan"
+  },
+  "phoneDetail": {
+    "grade": "Grado",
+    "storage": "Almasenamientu",
+    "batteryHealth": "Salud di Bateria",
+    "color": "Koló",
+    "warranty": "Garantia",
+    "warrantyStandard3m": "Estándar 3 Luna",
+    "warrantyApple3m": "3 Luna + Garantia di Apple",
+    "warrantyOther": "Otro",
+    "description": "Deskripshon",
+    "buyNow": "Kumpra Awor - {price}",
+    "reserved": "Reservá",
+    "sold": "Bendí",
+    "currentlyReserved": "Aktualmente Reservá",
+    "soldOut": "Agotá"
+  },
+  "checkout": {
+    "title": "Paga",
+    "orderSummary": "Resúmen di Orden",
+    "phoneNotAvailable": "Telefon No Disponibel",
+    "phoneNotAvailableDesc": "E telefon aki no ta disponibel mas pa kumpra.",
+    "browseOtherPhones": "Mira otro telefonnan",
+    "backToDetails": "Bèk na detaye di telefon"
+  },
+  "checkoutForm": {
+    "completePayment": "Kompletá Pago",
+    "paymentInstructions": "Sken e kódigo QR of klik e bòton abou pa paga {amount} pa bo {model}.",
+    "paymentQrAlt": "Kódigo QR di Pago",
+    "payWithSentoo": "Paga ku Sentoo",
+    "redirectNotice": "Lo redirect bo na Sentoo pa kompletá e pago di forma sigur.",
+    "yourInformation": "Bo Informashon",
+    "fulfillmentMethod": "Manera di Entrega",
+    "storePickup": "Buska na Tènda",
+    "delivery": "Entrega (+{fee})",
+    "deliveryAddress": "Adrès di Entrega *",
+    "deliveryPlaceholder": "Kaya, bario, siudat...",
+    "fullName": "Nòmber Kompletu *",
+    "namePlaceholder": "John Doe",
+    "email": "Email *",
+    "emailPlaceholder": "john@example.com",
+    "phoneNumber": "Number di Telefon *",
+    "phonePlaceholder": "+5999...",
+    "deliveryFee": "Kostu di entrega",
+    "pay": "Paga {amount}"
+  },
+  "filters": {
+    "searchPlaceholder": "Buska telefonnan...",
+    "allBrands": "Tur Markanan",
+    "allGrades": "Tur Gradonan",
+    "grade": "Grado {letter}",
+    "brandPlaceholder": "Marka",
+    "gradePlaceholder": "Grado",
+    "sortPlaceholder": "Sortá pa",
+    "newestFirst": "Mas Nobo Promé",
+    "priceLowHigh": "Prijs: Abou pa Ariba",
+    "priceHighLow": "Prijs: Ariba pa Abou",
+    "clear": "Limpia"
+  },
+  "payment": {
+    "successTitle": "Pago Eksitoso!",
+    "successMessage": "Bo pago a wordu risibí. Lo bo risibí un email di konfirmashon pronto.",
+    "pendingTitle": "Pago Pendiente",
+    "pendingMessage": "Bo pago ta wordu prosesá. Lo nos notifiká bo ora e wordu konfirmá.",
+    "processingTitle": "Prosesando Pago",
+    "failedTitle": "Pago a Faya",
+    "failedMessage": "Bo pago no por a wordu prosesá. Por fabor purba atrobe of kontaktá nos pa yudansa.",
+    "cancelledTitle": "Pago Kanselá",
+    "cancelledMessage": "Bo a kanselá e pago. E telefon ta disponibel ainda pa kumpra.",
+    "expiredTitle": "Pago a Ekspirá",
+    "expiredMessage": "E seshon di pago a ekspirá. Por fabor purba atrobe.",
+    "verifying": "Verifikando Pago...",
+    "verifyingMessage": "Por fabor warda mientras nos ta verifiká bo pago ku Sentoo.",
+    "checkingUpdates": "Chèkiando pa aktualidatnan...",
+    "tryAgain": "Purba Atrobe",
+    "startNewPayment": "Kuminsá Pago Nobo",
+    "defaultTitle": "Status di Pago",
+    "defaultMessage": "Nos ta prosesando bo pago. Por fabor check bèk pronto."
+  },
+  "metadata": {
+    "siteTitle": "HSO - Telefonnan di Segunda Man",
+    "siteDescription": "Telefonnan di segunda man di kalidat na Curaçao. Mira, kumpra, i paga sigur ku Sentoo."
+  }
+}

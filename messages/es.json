@@ -1,0 +1,113 @@
+{
+  "common": {
+    "browsePhones": "Ver Teléfonos",
+    "admin": "Administrador",
+    "goHome": "Ir al Inicio",
+    "continueShopping": "Seguir Comprando",
+    "total": "Total",
+    "clear": "Limpiar",
+    "footer": "HSO - Teléfonos de Segunda Mano | Curaçao",
+    "poweredBy": "Desarrollado por Connections Curaçao"
+  },
+  "home": {
+    "heroTitle": "Teléfonos de Segunda Mano de Calidad",
+    "heroDescription": "Encuentra tu próximo teléfono a un excelente precio. Todos los teléfonos están probados, clasificados y listos para ti. Paga de forma segura con Sentoo.",
+    "featureTestedTitle": "Probados y Clasificados",
+    "featureTestedDesc": "Cada teléfono es inspeccionado y clasificado por calidad",
+    "featurePaymentsTitle": "Pagos Seguros",
+    "featurePaymentsDesc": "Paga de forma segura a través de la red bancaria de Sentoo",
+    "featurePricesTitle": "Excelentes Precios",
+    "featurePricesDesc": "Teléfonos de calidad a precios que tienen sentido",
+    "latestPhones": "Últimos Teléfonos",
+    "viewAll": "Ver Todos"
+  },
+  "phones": {
+    "title": "Ver Teléfonos",
+    "metaDescription": "Explora teléfonos de segunda mano de calidad en Curaçao. Filtra por marca, grado y precio.",
+    "noResults": "No se encontraron teléfonos",
+    "noResultsHint": "Intenta ajustar tus filtros",
+    "backToPhones": "Volver a teléfonos"
+  },
+  "phoneDetail": {
+    "grade": "Grado",
+    "storage": "Almacenamiento",
+    "batteryHealth": "Salud de la Batería",
+    "color": "Color",
+    "warranty": "Garantía",
+    "warrantyStandard3m": "Estándar 3 Meses",
+    "warrantyApple3m": "3 Meses + Garantía Apple",
+    "warrantyOther": "Otra",
+    "description": "Descripción",
+    "buyNow": "Comprar Ahora - {price}",
+    "reserved": "Reservado",
+    "sold": "Vendido",
+    "currentlyReserved": "Actualmente Reservado",
+    "soldOut": "Agotado"
+  },
+  "checkout": {
+    "title": "Pagar",
+    "orderSummary": "Resumen del Pedido",
+    "phoneNotAvailable": "Teléfono No Disponible",
+    "phoneNotAvailableDesc": "Este teléfono ya no está disponible para compra.",
+    "browseOtherPhones": "Ver otros teléfonos",
+    "backToDetails": "Volver a los detalles del teléfono"
+  },
+  "checkoutForm": {
+    "completePayment": "Completar Pago",
+    "paymentInstructions": "Escanea el código QR o haz clic en el botón de abajo para pagar {amount} por tu {model}.",
+    "paymentQrAlt": "Código QR de Pago",
+    "payWithSentoo": "Pagar con Sentoo",
+    "redirectNotice": "Serás redirigido a Sentoo para completar el pago de forma segura.",
+    "yourInformation": "Tu Información",
+    "fulfillmentMethod": "Método de Entrega",
+    "storePickup": "Recoger en Tienda",
+    "delivery": "Envío a Domicilio (+{fee})",
+    "deliveryAddress": "Dirección de Envío *",
+    "deliveryPlaceholder": "Calle, barrio, ciudad...",
+    "fullName": "Nombre Completo *",
+    "namePlaceholder": "Juan Pérez",
+    "email": "Correo Electrónico *",
+    "emailPlaceholder": "juan@ejemplo.com",
+    "phoneNumber": "Número de Teléfono *",
+    "phonePlaceholder": "+5999...",
+    "deliveryFee": "Costo de envío",
+    "pay": "Pagar {amount}"
+  },
+  "filters": {
+    "searchPlaceholder": "Buscar teléfonos...",
+    "allBrands": "Todas las Marcas",
+    "allGrades": "Todos los Grados",
+    "grade": "Grado {letter}",
+    "brandPlaceholder": "Marca",
+    "gradePlaceholder": "Grado",
+    "sortPlaceholder": "Ordenar por",
+    "newestFirst": "Más Recientes",
+    "priceLowHigh": "Precio: Menor a Mayor",
+    "priceHighLow": "Precio: Mayor a Menor",
+    "clear": "Limpiar"
+  },
+  "payment": {
+    "successTitle": "¡Pago Exitoso!",
+    "successMessage": "Tu pago ha sido recibido. Recibirás un correo de confirmación en breve.",
+    "pendingTitle": "Pago Pendiente",
+    "pendingMessage": "Tu pago está siendo procesado. Te notificaremos una vez que sea confirmado.",
+    "processingTitle": "Procesando Pago",
+    "failedTitle": "Pago Fallido",
+    "failedMessage": "No se pudo procesar tu pago. Por favor, inténtalo de nuevo o contáctanos para obtener ayuda.",
+    "cancelledTitle": "Pago Cancelado",
+    "cancelledMessage": "Cancelaste el pago. El teléfono aún está disponible para compra.",
+    "expiredTitle": "Pago Expirado",
+    "expiredMessage": "La sesión de pago ha expirado. Por favor, inténtalo de nuevo.",
+    "verifying": "Verificando Pago...",
+    "verifyingMessage": "Por favor espera mientras verificamos tu pago con Sentoo.",
+    "checkingUpdates": "Buscando actualizaciones...",
+    "tryAgain": "Intentar de Nuevo",
+    "startNewPayment": "Iniciar Nuevo Pago",
+    "defaultTitle": "Estado del Pago",
+    "defaultMessage": "Estamos procesando tu pago. Por favor, vuelve a consultar en breve."
+  },
+  "metadata": {
+    "siteTitle": "HSO - Teléfonos de Segunda Mano",
+    "siteDescription": "Teléfonos de segunda mano de calidad en Curaçao. Explora, compra y paga de forma segura con Sentoo."
+  }
+}

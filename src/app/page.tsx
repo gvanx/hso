@@ -1,13 +1,17 @@
 export const dynamic = "force-dynamic";
 
 import Link from "next/link";
+import { getTranslations } from "next-intl/server";
 import { createClient } from "@/lib/supabase/server";
 import { PhoneGrid } from "@/components/PhoneGrid";
+import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Smartphone, Shield, CreditCard } from "lucide-react";
 
 export default async function HomePage() {
   const supabase = await createClient();
+  const t = await getTranslations("home");
+  const tc = await getTranslations("common");
 
   const { data: featuredPhones } = await supabase
     .from("phones")
@@ -30,11 +34,12 @@ export default async function HomePage() {
               href="/phones"
               className="text-sm text-muted-foreground hover:text-foreground transition-colors"
             >
-              Browse Phones
+              {tc("browsePhones")}
             </Link>
             <Button asChild size="sm" variant="outline">
-              <Link href="/admin">Admin</Link>
+              <Link href="/admin">{tc("admin")}</Link>
             </Button>
+            <LanguageSwitcher />
           </nav>
         </div>
       </header>
@@ -43,16 +48,15 @@ export default async function HomePage() {
       <section className="bg-gradient-to-b from-muted/50 to-background py-20 px-4">
         <div className="container mx-auto text-center max-w-3xl">
           <h1 className="text-4xl sm:text-5xl font-bold tracking-tight mb-6">
-            Quality Second-Hand Phones
+            {t("heroTitle")}
           </h1>
           <p className="text-lg text-muted-foreground mb-8 max-w-xl mx-auto">
-            Find your next phone at a great price. All phones are tested,
-            graded, and ready for you. Pay securely with Sentoo.
+            {t("heroDescription")}
           </p>
           <div className="flex gap-4 justify-center">
             <Button asChild size="lg">
               <Link href="/phones">
-                Browse Phones
+                {tc("browsePhones")}
                 <ArrowRight className="h-4 w-4 ml-2" />
               </Link>
             </Button>
@@ -70,9 +74,9 @@ export default async function HomePage() {
                   <Shield className="h-6 w-6 text-primary" />
                 </div>
               </div>
-              <h3 className="font-semibold mb-1">Tested &amp; Graded</h3>
+              <h3 className="font-semibold mb-1">{t("featureTestedTitle")}</h3>
               <p className="text-sm text-muted-foreground">
-                Every phone is inspected and graded for quality
+                {t("featureTestedDesc")}
               </p>
             </div>
             <div className="text-center">
@@ -81,9 +85,9 @@ export default async function HomePage() {
                   <CreditCard className="h-6 w-6 text-primary" />
                 </div>
               </div>
-              <h3 className="font-semibold mb-1">Secure Payments</h3>
+              <h3 className="font-semibold mb-1">{t("featurePaymentsTitle")}</h3>
               <p className="text-sm text-muted-foreground">
-                Pay safely through Sentoo&apos;s banking network
+                {t("featurePaymentsDesc")}
               </p>
             </div>
             <div className="text-center">
@@ -92,9 +96,9 @@ export default async function HomePage() {
                   <Smartphone className="h-6 w-6 text-primary" />
                 </div>
               </div>
-              <h3 className="font-semibold mb-1">Great Prices</h3>
+              <h3 className="font-semibold mb-1">{t("featurePricesTitle")}</h3>
               <p className="text-sm text-muted-foreground">
-                Quality phones at prices that make sense
+                {t("featurePricesDesc")}
               </p>
             </div>
           </div>
@@ -105,10 +109,10 @@ export default async function HomePage() {
       <section className="py-16 px-4">
         <div className="container mx-auto">
           <div className="flex items-center justify-between mb-8">
-            <h2 className="text-2xl font-bold">Latest Phones</h2>
+            <h2 className="text-2xl font-bold">{t("latestPhones")}</h2>
             <Button asChild variant="ghost">
               <Link href="/phones">
-                View All
+                {t("viewAll")}
                 <ArrowRight className="h-4 w-4 ml-1" />
               </Link>
             </Button>
@@ -120,8 +124,8 @@ export default async function HomePage() {
       {/* Footer */}
       <footer className="border-t py-8 px-4">
         <div className="container mx-auto text-center text-sm text-muted-foreground">
-          <p>HSO - Second Hand Phones | Curaçao</p>
-          <p className="mt-1">Powered by Connections Curaçao</p>
+          <p>{tc("footer")}</p>
+          <p className="mt-1">{tc("poweredBy")}</p>
         </div>
       </footer>
     </div>

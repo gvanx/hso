@@ -2,7 +2,9 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
+import { getTranslations } from "next-intl/server";
 import { createClient } from "@/lib/supabase/server";
+import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { formatCurrency, formatStorage, getGradeLabel, getGradeColor, getPhoneColorHex } from "@/lib/utils";
@@ -66,6 +68,8 @@ export default async function PhoneDetailPage({
 }) {
   const { id } = await params;
   const supabase = await createClient();
+  const t = await getTranslations("phoneDetail");
+  const tp = await getTranslations("phones");
 
   const { data: phone } = await supabase
     .from("phones")
@@ -87,6 +91,7 @@ export default async function PhoneDetailPage({
             <Smartphone className="h-6 w-6" />
             <span className="font-bold text-xl">HSO</span>
           </Link>
+          <LanguageSwitcher />
         </div>
       </header>
 
@@ -96,7 +101,7 @@ export default async function PhoneDetailPage({
           className="inline-flex items-center text-sm text-muted-foreground hover:text-foreground mb-6"
         >
           <ArrowLeft className="h-4 w-4 mr-1" />
-          Back to phones
+          {tp("backToPhones")}
         </Link>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
@@ -153,7 +158,7 @@ export default async function PhoneDetailPage({
               </span>
               {!isAvailable && (
                 <Badge variant="secondary" className="bg-yellow-100 text-yellow-800">
-                  {phone.status === "reserved" ? "Reserved" : "Sold"}
+                  {phone.status === "reserved" ? t("reserved") : t("sold")}
                 </Badge>
               )}
             </div>
@@ -163,7 +168,7 @@ export default async function PhoneDetailPage({
                 <div className="flex items-center gap-3">
                   <Tag className="h-4 w-4 text-muted-foreground" />
                   <span className="text-sm">
-                    Grade:{" "}
+                    {t("grade")}:{" "}
                     <span className={`inline-block px-2 py-0.5 rounded-full text-xs font-medium ${getGradeColor(phone.grade)}`}>
                       {getGradeLabel(phone.grade)}
                     </span>
@@ -173,14 +178,14 @@ export default async function PhoneDetailPage({
               {phone.storage_gb != null && (
                 <div className="flex items-center gap-3">
                   <Smartphone className="h-4 w-4 text-muted-foreground" />
-                  <span className="text-sm">Storage: {formatStorage(phone.storage_gb)}</span>
+                  <span className="text-sm">{t("storage")}: {formatStorage(phone.storage_gb)}</span>
                 </div>
               )}
               {phone.battery_pct != null && (
                 <div className="flex items-center gap-3">
                   <Battery className="h-4 w-4 text-muted-foreground" />
                   <span className="text-sm">
-                    Battery Health: {phone.battery_pct}%
+                    {t("batteryHealth")}: {phone.battery_pct}%
                   </span>
                 </div>
               )}
@@ -190,19 +195,19 @@ export default async function PhoneDetailPage({
                     className="h-4 w-4 rounded-full border border-gray-300"
                     style={getPhoneColorHex(phone.color) ? { backgroundColor: getPhoneColorHex(phone.color)! } : { backgroundColor: '#d1d5db' }}
                   />
-                  <span className="text-sm">Color: {phone.color}</span>
+                  <span className="text-sm">{t("color")}: {phone.color}</span>
                 </div>
               )}
               {phone.warranty_type && (
                 <div className="flex items-center gap-3">
                   <ShieldCheck className="h-4 w-4 text-muted-foreground" />
                   <span className="text-sm">
-                    Warranty:{" "}
+                    {t("warranty")}:{" "}
                     {phone.warranty_type === "standard_3m"
-                      ? "Standard 3 Months"
+                      ? t("warrantyStandard3m")
                       : phone.warranty_type === "apple_3m"
-                        ? "3 Months + Apple Warranty"
-                        : phone.warranty_text || "Other"}
+                        ? t("warrantyApple3m")
+                        : phone.warranty_text || t("warrantyOther")}
                   </span>
                 </div>
               )}
@@ -210,7 +215,7 @@ export default async function PhoneDetailPage({
 
             {phone.description && (
               <div className="mt-6">
-                <h3 className="font-semibold mb-2">Description</h3>
+                <h3 className="font-semibold mb-2">{t("description")}</h3>
                 <p className="text-sm text-muted-foreground whitespace-pre-wrap">
                   {phone.description}
                 </p>
@@ -222,14 +227,14 @@ export default async function PhoneDetailPage({
                 <Button asChild size="lg" className="w-full sm:w-auto">
                   <Link href={`/checkout/${phone.id}`}>
                     <ShoppingCart className="h-4 w-4 mr-2" />
-                    Buy Now - {formatCurrency(phone.price_cents)}
+                    {t("buyNow", { price: formatCurrency(phone.price_cents) })}
                   </Link>
                 </Button>
               ) : (
                 <Button size="lg" disabled className="w-full sm:w-auto">
                   {phone.status === "reserved"
-                    ? "Currently Reserved"
-                    : "Sold Out"}
+                    ? t("currentlyReserved")
+                    : t("soldOut")}
                 </Button>
               )}
             </div>

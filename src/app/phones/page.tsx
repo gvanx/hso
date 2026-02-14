@@ -1,21 +1,24 @@
 export const dynamic = "force-dynamic";
 
-import type { Metadata } from "next";
 import { Suspense } from "react";
 import Link from "next/link";
+import { getTranslations } from "next-intl/server";
 import { createClient } from "@/lib/supabase/server";
 import { PhoneGrid } from "@/components/PhoneGrid";
 import { PhoneFilters } from "@/components/PhoneFilters";
 import { Pagination } from "@/components/Pagination";
+import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 import { Smartphone } from "lucide-react";
 
 const PAGE_SIZE = 12;
 
-export const metadata: Metadata = {
-  title: "Browse Phones | HSO",
-  description:
-    "Browse quality second-hand phones in Curaçao. Filter by brand, grade, and price.",
-};
+export async function generateMetadata() {
+  const t = await getTranslations("phones");
+  return {
+    title: `${t("title")} | HSO`,
+    description: t("metaDescription"),
+  };
+}
 
 export default async function PhonesPage({
   searchParams,
@@ -24,6 +27,8 @@ export default async function PhonesPage({
 }) {
   const params = await searchParams;
   const supabase = await createClient();
+  const t = await getTranslations("phones");
+  const tc = await getTranslations("common");
 
   const currentPage = Math.max(1, parseInt(params.page || "1", 10) || 1);
   const from = (currentPage - 1) * PAGE_SIZE;
@@ -79,14 +84,15 @@ export default async function PhonesPage({
           </Link>
           <nav className="flex items-center gap-4">
             <Link href="/phones" className="text-sm font-medium">
-              Browse Phones
+              {tc("browsePhones")}
             </Link>
+            <LanguageSwitcher />
           </nav>
         </div>
       </header>
 
       <main className="container mx-auto px-4 py-8">
-        <h1 className="text-3xl font-bold mb-6">Browse Phones</h1>
+        <h1 className="text-3xl font-bold mb-6">{t("title")}</h1>
 
         <Suspense fallback={null}>
           <PhoneFilters brands={brands} />

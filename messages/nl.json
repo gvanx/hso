@@ -1,0 +1,113 @@
+{
+  "common": {
+    "browsePhones": "Telefoons bekijken",
+    "admin": "Admin",
+    "goHome": "Naar home",
+    "continueShopping": "Verder winkelen",
+    "total": "Totaal",
+    "clear": "Wissen",
+    "footer": "HSO - Tweedehands Telefoons | Curaçao",
+    "poweredBy": "Mogelijk gemaakt door Connections Curaçao"
+  },
+  "home": {
+    "heroTitle": "Tweedehands Telefoons van Kwaliteit",
+    "heroDescription": "Vind je volgende telefoon voor een goede prijs. Alle telefoons zijn getest, beoordeeld en klaar voor gebruik. Betaal veilig met Sentoo.",
+    "featureTestedTitle": "Getest & Beoordeeld",
+    "featureTestedDesc": "Elke telefoon wordt geïnspecteerd en beoordeeld op kwaliteit",
+    "featurePaymentsTitle": "Veilige Betalingen",
+    "featurePaymentsDesc": "Betaal veilig via het bankennetwerk van Sentoo",
+    "featurePricesTitle": "Scherpe Prijzen",
+    "featurePricesDesc": "Kwaliteitstelefoons voor verstandige prijzen",
+    "latestPhones": "Nieuwste Telefoons",
+    "viewAll": "Alles bekijken"
+  },
+  "phones": {
+    "title": "Telefoons bekijken",
+    "metaDescription": "Bekijk tweedehands kwaliteitstelefoons op Curaçao. Filter op merk, beoordeling en prijs.",
+    "noResults": "Geen telefoons gevonden",
+    "noResultsHint": "Probeer je filters aan te passen",
+    "backToPhones": "Terug naar telefoons"
+  },
+  "phoneDetail": {
+    "grade": "Beoordeling",
+    "storage": "Opslag",
+    "batteryHealth": "Batterijconditie",
+    "color": "Kleur",
+    "warranty": "Garantie",
+    "warrantyStandard3m": "Standaard 3 Maanden",
+    "warrantyApple3m": "3 Maanden + Apple Garantie",
+    "warrantyOther": "Anders",
+    "description": "Beschrijving",
+    "buyNow": "Nu kopen - {price}",
+    "reserved": "Gereserveerd",
+    "sold": "Verkocht",
+    "currentlyReserved": "Momenteel gereserveerd",
+    "soldOut": "Uitverkocht"
+  },
+  "checkout": {
+    "title": "Afrekenen",
+    "orderSummary": "Besteloverzicht",
+    "phoneNotAvailable": "Telefoon niet beschikbaar",
+    "phoneNotAvailableDesc": "Deze telefoon is niet meer beschikbaar voor aankoop.",
+    "browseOtherPhones": "Andere telefoons bekijken",
+    "backToDetails": "Terug naar telefoongegevens"
+  },
+  "checkoutForm": {
+    "completePayment": "Betaling voltooien",
+    "paymentInstructions": "Scan de QR-code of klik op de knop hieronder om {amount} te betalen voor je {model}.",
+    "paymentQrAlt": "Betaling QR-code",
+    "payWithSentoo": "Betaal met Sentoo",
+    "redirectNotice": "Je wordt doorgestuurd naar Sentoo om de betaling veilig af te ronden.",
+    "yourInformation": "Jouw Gegevens",
+    "fulfillmentMethod": "Aflevermethode",
+    "storePickup": "Ophalen in winkel",
+    "delivery": "Bezorging (+{fee})",
+    "deliveryAddress": "Bezorgadres *",
+    "deliveryPlaceholder": "Straat, wijk, stad...",
+    "fullName": "Volledige naam *",
+    "namePlaceholder": "Jan Jansen",
+    "email": "E-mail *",
+    "emailPlaceholder": "jan@voorbeeld.com",
+    "phoneNumber": "Telefoonnummer *",
+    "phonePlaceholder": "+5999...",
+    "deliveryFee": "Bezorgkosten",
+    "pay": "Betaal {amount}"
+  },
+  "filters": {
+    "searchPlaceholder": "Telefoons zoeken...",
+    "allBrands": "Alle merken",
+    "allGrades": "Alle beoordelingen",
+    "grade": "Beoordeling {letter}",
+    "brandPlaceholder": "Merk",
+    "gradePlaceholder": "Beoordeling",
+    "sortPlaceholder": "Sorteren op",
+    "newestFirst": "Nieuwste eerst",
+    "priceLowHigh": "Prijs: laag naar hoog",
+    "priceHighLow": "Prijs: hoog naar laag",
+    "clear": "Wissen"
+  },
+  "payment": {
+    "successTitle": "Betaling geslaagd!",
+    "successMessage": "Je betaling is ontvangen. Je ontvangt binnenkort een bevestigingsmail.",
+    "pendingTitle": "Betaling in behandeling",
+    "pendingMessage": "Je betaling wordt verwerkt. We laten je weten zodra deze is bevestigd.",
+    "processingTitle": "Betaling wordt verwerkt",
+    "failedTitle": "Betaling mislukt",
+    "failedMessage": "Je betaling kon niet worden verwerkt. Probeer het opnieuw of neem contact met ons op voor hulp.",
+    "cancelledTitle": "Betaling geannuleerd",
+    "cancelledMessage": "Je hebt de betaling geannuleerd. De telefoon is nog steeds beschikbaar voor aankoop.",
+    "expiredTitle": "Betaling verlopen",
+    "expiredMessage": "De betalingssessie is verlopen. Probeer het opnieuw.",
+    "verifying": "Betaling verifiëren...",
+    "verifyingMessage": "Een moment geduld terwijl we je betaling verifiëren bij Sentoo.",
+    "checkingUpdates": "Controleren op updates...",
+    "tryAgain": "Opnieuw proberen",
+    "startNewPayment": "Nieuwe betaling starten",
+    "defaultTitle": "Betalingsstatus",
+    "defaultMessage": "We verwerken je betaling. Controleer het later opnieuw."
+  },
+  "metadata": {
+    "siteTitle": "HSO - Tweedehands Telefoons",
+    "siteDescription": "Tweedehands kwaliteitstelefoons op Curaçao. Bekijk, koop en betaal veilig met Sentoo."
+  }
+}

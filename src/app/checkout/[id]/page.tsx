@@ -1,8 +1,10 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
+import { getTranslations } from "next-intl/server";
 import { createClient } from "@/lib/supabase/server";
 import { CheckoutForm } from "@/components/CheckoutForm";
+import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 import { formatCurrency, formatStorage } from "@/lib/utils";
 import { Smartphone, ArrowLeft } from "lucide-react";
 
@@ -13,6 +15,8 @@ export default async function CheckoutPage({
 }) {
   const { id } = await params;
   const supabase = await createClient();
+  const t = await getTranslations("checkout");
+  const tc = await getTranslations("common");
 
   const { data: phone } = await supabase
     .from("phones")
@@ -28,12 +32,12 @@ export default async function CheckoutPage({
     return (
       <div className="min-h-screen flex items-center justify-center p-4">
         <div className="text-center">
-          <h1 className="text-2xl font-bold mb-2">Phone Not Available</h1>
+          <h1 className="text-2xl font-bold mb-2">{t("phoneNotAvailable")}</h1>
           <p className="text-muted-foreground mb-4">
-            This phone is no longer available for purchase.
+            {t("phoneNotAvailableDesc")}
           </p>
           <Link href="/phones" className="text-primary underline">
-            Browse other phones
+            {t("browseOtherPhones")}
           </Link>
         </div>
       </div>
@@ -48,6 +52,7 @@ export default async function CheckoutPage({
             <Smartphone className="h-6 w-6" />
             <span className="font-bold text-xl">HSO</span>
           </Link>
+          <LanguageSwitcher />
         </div>
       </header>
 
@@ -57,15 +62,15 @@ export default async function CheckoutPage({
           className="inline-flex items-center text-sm text-muted-foreground hover:text-foreground mb-6"
         >
           <ArrowLeft className="h-4 w-4 mr-1" />
-          Back to phone details
+          {t("backToDetails")}
         </Link>
 
-        <h1 className="text-3xl font-bold mb-8">Checkout</h1>
+        <h1 className="text-3xl font-bold mb-8">{t("title")}</h1>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* Phone Summary */}
           <div className="border rounded-lg p-6">
-            <h2 className="font-semibold mb-4">Order Summary</h2>
+            <h2 className="font-semibold mb-4">{t("orderSummary")}</h2>
             <div className="flex gap-4">
               <div className="relative w-20 h-20 rounded-md overflow-hidden bg-muted flex-shrink-0">
                 {phone.images?.[0] ? (
@@ -93,7 +98,7 @@ export default async function CheckoutPage({
               </div>
             </div>
             <div className="border-t mt-4 pt-4 flex justify-between">
-              <span className="font-medium">Total</span>
+              <span className="font-medium">{tc("total")}</span>
               <span className="font-bold text-lg">
                 {formatCurrency(phone.price_cents)}
               </span>

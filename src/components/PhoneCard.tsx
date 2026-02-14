@@ -1,12 +1,14 @@
 import Link from "next/link";
 import Image from "next/image";
+import { getTranslations } from "next-intl/server";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { formatCurrency, formatStorage, getGradeColor, getPhoneColorHex } from "@/lib/utils";
 import type { Phone } from "@/lib/types";
 import { Battery, Smartphone } from "lucide-react";
 
-export function PhoneCard({ phone }: { phone: Phone }) {
+export async function PhoneCard({ phone }: { phone: Phone }) {
+  const t = await getTranslations("filters");
   const imageUrl = phone.images?.[0];
 
   return (
@@ -28,7 +30,7 @@ export function PhoneCard({ phone }: { phone: Phone }) {
           )}
           {phone.grade && (
             <Badge className={`absolute top-2 right-2 ${getGradeColor(phone.grade)}`}>
-              Grade {phone.grade}
+              {t("grade", { letter: phone.grade })}
             </Badge>
           )}
         </div>

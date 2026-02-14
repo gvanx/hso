@@ -1,13 +1,16 @@
+import { getTranslations } from "next-intl/server";
 import { PhoneCard } from "./PhoneCard";
 import type { Phone } from "@/lib/types";
 
-export function PhoneGrid({ phones }: { phones: Phone[] }) {
+export async function PhoneGrid({ phones }: { phones: Phone[] }) {
+  const t = await getTranslations("phones");
+
   if (phones.length === 0) {
     return (
       <div className="text-center py-16">
-        <p className="text-muted-foreground text-lg">No phones found</p>
+        <p className="text-muted-foreground text-lg">{t("noResults")}</p>
         <p className="text-muted-foreground text-sm mt-1">
-          Try adjusting your filters
+          {t("noResultsHint")}
         </p>
       </div>
     );

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -14,6 +15,8 @@ import { Loader2, CreditCard, QrCode, Store, Truck } from "lucide-react";
 import Image from "next/image";
 
 export function CheckoutForm({ phone }: { phone: Phone }) {
+  const t = useTranslations("checkoutForm");
+  const tc = useTranslations("common");
   const [loading, setLoading] = useState(false);
   const [fulfillmentType, setFulfillmentType] = useState<"pickup" | "delivery">("pickup");
   const [paymentData, setPaymentData] = useState<{
@@ -77,21 +80,22 @@ export function CheckoutForm({ phone }: { phone: Phone }) {
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <CreditCard className="h-5 w-5" />
-            Complete Payment
+            {t("completePayment")}
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-6 text-center">
           <p className="text-muted-foreground">
-            Scan the QR code or click the button below to pay{" "}
-            <strong>{formatCurrency(totalCents)}</strong> for your{" "}
-            <strong>{phone.model}</strong>.
+            {t("paymentInstructions", {
+              amount: formatCurrency(totalCents),
+              model: phone.model,
+            })}
           </p>
 
           <div className="flex justify-center">
             <div className="relative w-48 h-48 border rounded-lg overflow-hidden">
               <Image
                 src={paymentData.qr_code}
-                alt="Payment QR Code"
+                alt={t("paymentQrAlt")}
                 fill
                 className="object-contain p-2"
                 unoptimized
@@ -102,12 +106,12 @@ export function CheckoutForm({ phone }: { phone: Phone }) {
           <Button asChild size="lg" className="w-full max-w-sm">
             <a href={paymentData.url} target="_blank" rel="noopener noreferrer">
               <QrCode className="h-4 w-4 mr-2" />
-              Pay with Sentoo
+              {t("payWithSentoo")}
             </a>
           </Button>
 
           <p className="text-xs text-muted-foreground">
-            You will be redirected to Sentoo to complete the payment securely.
+            {t("redirectNotice")}
           </p>
         </CardContent>
       </Card>
@@ -117,13 +121,13 @@ export function CheckoutForm({ phone }: { phone: Phone }) {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Your Information</CardTitle>
+        <CardTitle>{t("yourInformation")}</CardTitle>
       </CardHeader>
       <CardContent>
         <form onSubmit={handleSubmit} className="space-y-4">
           {/* Fulfillment type toggle */}
           <div className="space-y-2">
-            <Label>Fulfillment Method</Label>
+            <Label>{t("fulfillmentMethod")}</Label>
             <div className="grid grid-cols-2 gap-2">
               <button
                 type="button"
@@ -135,7 +139,7 @@ export function CheckoutForm({ phone }: { phone: Phone }) {
                 }`}
               >
                 <Store className="h-4 w-4" />
-                Store Pickup
+                {t("storePickup")}
               </button>
               <button
                 type="button"
@@ -147,7 +151,7 @@ export function CheckoutForm({ phone }: { phone: Phone }) {
                 }`}
               >
                 <Truck className="h-4 w-4" />
-                Delivery (+{formatCurrency(DELIVERY_FEE_CENTS)})
+                {t("delivery", { fee: formatCurrency(DELIVERY_FEE_CENTS) })}
               </button>
             </div>
           </div>
@@ -155,48 +159,48 @@ export function CheckoutForm({ phone }: { phone: Phone }) {
           {/* Delivery address */}
           {fulfillmentType === "delivery" && (
             <div className="space-y-2">
-              <Label htmlFor="delivery-address">Delivery Address *</Label>
+              <Label htmlFor="delivery-address">{t("deliveryAddress")}</Label>
               <Textarea
                 id="delivery-address"
                 required
                 value={formData.deliveryAddress}
                 onChange={(e) => updateField("deliveryAddress", e.target.value)}
-                placeholder="Street, neighborhood, city..."
+                placeholder={t("deliveryPlaceholder")}
                 rows={3}
               />
             </div>
           )}
 
           <div className="space-y-2">
-            <Label htmlFor="name">Full Name *</Label>
+            <Label htmlFor="name">{t("fullName")}</Label>
             <Input
               id="name"
               required
               value={formData.name}
               onChange={(e) => updateField("name", e.target.value)}
-              placeholder="John Doe"
+              placeholder={t("namePlaceholder")}
             />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="email">Email *</Label>
+            <Label htmlFor="email">{t("email")}</Label>
             <Input
               id="email"
               type="email"
               required
               value={formData.email}
               onChange={(e) => updateField("email", e.target.value)}
-              placeholder="john@example.com"
+              placeholder={t("emailPlaceholder")}
             />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="buyer-phone">Phone Number *</Label>
+            <Label htmlFor="buyer-phone">{t("phoneNumber")}</Label>
             <Input
               id="buyer-phone"
               type="tel"
               required
               value={formData.phone}
               onChange={(e) => updateField("phone", e.target.value)}
-              placeholder="+5999..."
+              placeholder={t("phonePlaceholder")}
             />
           </div>
 
@@ -208,19 +212,19 @@ export function CheckoutForm({ phone }: { phone: Phone }) {
             </div>
             {fulfillmentType === "delivery" && (
               <div className="flex justify-between">
-                <span>Delivery fee</span>
+                <span>{t("deliveryFee")}</span>
                 <span>{formatCurrency(DELIVERY_FEE_CENTS)}</span>
               </div>
             )}
             <div className="flex justify-between font-semibold border-t pt-1 mt-1">
-              <span>Total</span>
+              <span>{tc("total")}</span>
               <span>{formatCurrency(totalCents)}</span>
             </div>
           </div>
 
           <Button type="submit" className="w-full" size="lg" disabled={loading}>
             {loading && <Loader2 className="h-4 w-4 mr-2 animate-spin" />}
-            Pay {formatCurrency(totalCents)}
+            {t("pay", { amount: formatCurrency(totalCents) })}
           </Button>
         </form>
       </CardContent>

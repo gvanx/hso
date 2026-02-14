@@ -1,0 +1,113 @@
+{
+  "common": {
+    "browsePhones": "Browse Phones",
+    "admin": "Admin",
+    "goHome": "Go Home",
+    "continueShopping": "Continue Shopping",
+    "total": "Total",
+    "clear": "Clear",
+    "footer": "HSO - Second Hand Phones | Curaçao",
+    "poweredBy": "Powered by Connections Curaçao"
+  },
+  "home": {
+    "heroTitle": "Quality Second-Hand Phones",
+    "heroDescription": "Find your next phone at a great price. All phones are tested, graded, and ready for you. Pay securely with Sentoo.",
+    "featureTestedTitle": "Tested & Graded",
+    "featureTestedDesc": "Every phone is inspected and graded for quality",
+    "featurePaymentsTitle": "Secure Payments",
+    "featurePaymentsDesc": "Pay safely through Sentoo's banking network",
+    "featurePricesTitle": "Great Prices",
+    "featurePricesDesc": "Quality phones at prices that make sense",
+    "latestPhones": "Latest Phones",
+    "viewAll": "View All"
+  },
+  "phones": {
+    "title": "Browse Phones",
+    "metaDescription": "Browse quality second-hand phones in Curaçao. Filter by brand, grade, and price.",
+    "noResults": "No phones found",
+    "noResultsHint": "Try adjusting your filters",
+    "backToPhones": "Back to phones"
+  },
+  "phoneDetail": {
+    "grade": "Grade",
+    "storage": "Storage",
+    "batteryHealth": "Battery Health",
+    "color": "Color",
+    "warranty": "Warranty",
+    "warrantyStandard3m": "Standard 3 Months",
+    "warrantyApple3m": "3 Months + Apple Warranty",
+    "warrantyOther": "Other",
+    "description": "Description",
+    "buyNow": "Buy Now - {price}",
+    "reserved": "Reserved",
+    "sold": "Sold",
+    "currentlyReserved": "Currently Reserved",
+    "soldOut": "Sold Out"
+  },
+  "checkout": {
+    "title": "Checkout",
+    "orderSummary": "Order Summary",
+    "phoneNotAvailable": "Phone Not Available",
+    "phoneNotAvailableDesc": "This phone is no longer available for purchase.",
+    "browseOtherPhones": "Browse other phones",
+    "backToDetails": "Back to phone details"
+  },
+  "checkoutForm": {
+    "completePayment": "Complete Payment",
+    "paymentInstructions": "Scan the QR code or click the button below to pay {amount} for your {model}.",
+    "paymentQrAlt": "Payment QR Code",
+    "payWithSentoo": "Pay with Sentoo",
+    "redirectNotice": "You will be redirected to Sentoo to complete the payment securely.",
+    "yourInformation": "Your Information",
+    "fulfillmentMethod": "Fulfillment Method",
+    "storePickup": "Store Pickup",
+    "delivery": "Delivery (+{fee})",
+    "deliveryAddress": "Delivery Address *",
+    "deliveryPlaceholder": "Street, neighborhood, city...",
+    "fullName": "Full Name *",
+    "namePlaceholder": "John Doe",
+    "email": "Email *",
+    "emailPlaceholder": "john@example.com",
+    "phoneNumber": "Phone Number *",
+    "phonePlaceholder": "+5999...",
+    "deliveryFee": "Delivery fee",
+    "pay": "Pay {amount}"
+  },
+  "filters": {
+    "searchPlaceholder": "Search phones...",
+    "allBrands": "All Brands",
+    "allGrades": "All Grades",
+    "grade": "Grade {letter}",
+    "brandPlaceholder": "Brand",
+    "gradePlaceholder": "Grade",
+    "sortPlaceholder": "Sort by",
+    "newestFirst": "Newest First",
+    "priceLowHigh": "Price: Low to High",
+    "priceHighLow": "Price: High to Low",
+    "clear": "Clear"
+  },
+  "payment": {
+    "successTitle": "Payment Successful!",
+    "successMessage": "Your payment has been received. You will receive a confirmation email shortly.",
+    "pendingTitle": "Payment Pending",
+    "pendingMessage": "Your payment is being processed. We will notify you once it is confirmed.",
+    "processingTitle": "Payment Processing",
+    "failedTitle": "Payment Failed",
+    "failedMessage": "Your payment could not be processed. Please try again or contact us for help.",
+    "cancelledTitle": "Payment Cancelled",
+    "cancelledMessage": "You cancelled the payment. The phone is still available for purchase.",
+    "expiredTitle": "Payment Expired",
+    "expiredMessage": "The payment session has expired. Please try again.",
+    "verifying": "Verifying Payment...",
+    "verifyingMessage": "Please wait while we verify your payment with Sentoo.",
+    "checkingUpdates": "Checking for updates...",
+    "tryAgain": "Try Again",
+    "startNewPayment": "Start New Payment",
+    "defaultTitle": "Payment Status",
+    "defaultMessage": "We are processing your payment. Please check back shortly."
+  },
+  "metadata": {
+    "siteTitle": "HSO - Second Hand Phones",
+    "siteDescription": "Quality second-hand phones in Curaçao. Browse, buy, and pay securely with Sentoo."
+  }
+}

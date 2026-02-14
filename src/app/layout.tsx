@@ -1,6 +1,7 @@
-import type { Metadata } from "next";
 import Script from "next/script";
 import { Geist, Geist_Mono } from "next/font/google";
+import { NextIntlClientProvider } from "next-intl";
+import { getLocale, getMessages, getTranslations } from "next-intl/server";
 import { Toaster } from "@/components/ui/sonner";
 import "./globals.css";
 
@@ -14,38 +15,43 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-export const metadata: Metadata = {
-  title: "HSO - Second Hand Phones",
-  description:
-    "Quality second-hand phones in Curaçao. Browse, buy, and pay securely with Sentoo.",
-  openGraph: {
-    title: "HSO - Second Hand Phones",
-    description:
-      "Quality second-hand phones in Curaçao. Browse, buy, and pay securely with Sentoo.",
-    siteName: "HSO",
-    type: "website",
-  },
-  twitter: {
-    card: "summary",
-    title: "HSO - Second Hand Phones",
-    description:
-      "Quality second-hand phones in Curaçao. Browse, buy, and pay securely with Sentoo.",
-  },
-};
+export async function generateMetadata() {
+  const t = await getTranslations("metadata");
+  return {
+    title: t("siteTitle"),
+    description: t("siteDescription"),
+    openGraph: {
+      title: t("siteTitle"),
+      description: t("siteDescription"),
+      siteName: "HSO",
+      type: "website",
+    },
+    twitter: {
+      card: "summary",
+      title: t("siteTitle"),
+      description: t("siteDescription"),
+    },
+  };
+}
 
 const gaId = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID;
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const locale = await getLocale();
+  const messages = await getMessages();
+
   return (
-    <html lang="en">
+    <html lang={locale}>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {children}
+        <NextIntlClientProvider messages={messages}>
+          {children}
+        </NextIntlClientProvider>
         <Toaster richColors position="top-right" />
         {gaId && (
           <>

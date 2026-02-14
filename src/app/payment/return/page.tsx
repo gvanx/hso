@@ -2,6 +2,7 @@
 
 import { useEffect, useState, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
+import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import {
@@ -10,56 +11,13 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 import { Smartphone, CheckCircle, Clock, XCircle, Loader2 } from "lucide-react";
-
-const statusConfig: Record<
-  string,
-  { icon: typeof CheckCircle; title: string; message: string; color: string }
-> = {
-  success: {
-    icon: CheckCircle,
-    title: "Payment Successful!",
-    message:
-      "Your payment has been received. You will receive a confirmation email shortly.",
-    color: "text-green-600",
-  },
-  pending: {
-    icon: Clock,
-    title: "Payment Pending",
-    message:
-      "Your payment is being processed. We will notify you once it is confirmed.",
-    color: "text-yellow-600",
-  },
-  issued: {
-    icon: Clock,
-    title: "Payment Processing",
-    message:
-      "Your payment is being processed. We will notify you once it is confirmed.",
-    color: "text-yellow-600",
-  },
-  failed: {
-    icon: XCircle,
-    title: "Payment Failed",
-    message:
-      "Your payment could not be processed. Please try again or contact us for help.",
-    color: "text-red-600",
-  },
-  cancelled: {
-    icon: XCircle,
-    title: "Payment Cancelled",
-    message: "You cancelled the payment. The phone is still available for purchase.",
-    color: "text-gray-600",
-  },
-  expired: {
-    icon: XCircle,
-    title: "Payment Expired",
-    message: "The payment session has expired. Please try again.",
-    color: "text-gray-600",
-  },
-};
 
 function PaymentReturnContent() {
   const searchParams = useSearchParams();
+  const t = useTranslations("payment");
+  const tc = useTranslations("common");
   const phoneId = searchParams.get("phone_id");
   const urlStatus = searchParams.get("status") || "unknown";
   const [verifiedStatus, setVerifiedStatus] = useState<string | null>(null);
@@ -89,8 +47,6 @@ function PaymentReturnContent() {
           setRetryUrl(data.sentoo_payment_url);
         }
 
-        // Stop polling if status is final (but keep polling for retryable statuses
-        // since the transaction is still open and a retry payment may be processing)
         if (
           !data.retryable &&
           (data.status === "success" ||
@@ -102,7 +58,6 @@ function PaymentReturnContent() {
           return;
         }
 
-        // Keep polling for pending/issued statuses
         attempts++;
         if (attempts < maxAttempts) {
           setTimeout(verify, 3000);
@@ -118,10 +73,53 @@ function PaymentReturnContent() {
   }, [phoneId]);
 
   const status = verifiedStatus || urlStatus;
+
+  const statusConfig: Record<
+    string,
+    { icon: typeof CheckCircle; titleKey: string; messageKey: string; color: string }
+  > = {
+    success: {
+      icon: CheckCircle,
+      titleKey: "successTitle",
+      messageKey: "successMessage",
+      color: "text-green-600",
+    },
+    pending: {
+      icon: Clock,
+      titleKey: "pendingTitle",
+      messageKey: "pendingMessage",
+      color: "text-yellow-600",
+    },
+    issued: {
+      icon: Clock,
+      titleKey: "processingTitle",
+      messageKey: "pendingMessage",
+      color: "text-yellow-600",
+    },
+    failed: {
+      icon: XCircle,
+      titleKey: "failedTitle",
+      messageKey: "failedMessage",
+      color: "text-red-600",
+    },
+    cancelled: {
+      icon: XCircle,
+      titleKey: "cancelledTitle",
+      messageKey: "cancelledMessage",
+      color: "text-gray-600",
+    },
+    expired: {
+      icon: XCircle,
+      titleKey: "expiredTitle",
+      messageKey: "expiredMessage",
+      color: "text-gray-600",
+    },
+  };
+
   const config = statusConfig[status] || {
     icon: Clock,
-    title: "Payment Status",
-    message: "We are processing your payment. Please check back shortly.",
+    titleKey: "defaultTitle",
+    messageKey: "defaultMessage",
     color: "text-gray-600",
   };
   const StatusIcon = config.icon;
@@ -137,14 +135,14 @@ function PaymentReturnContent() {
           )}
         </div>
         <CardTitle className="text-2xl">
-          {polling && !verifiedStatus ? "Verifying Payment..." : config.title}
+          {polling && !verifiedStatus ? t("verifying") : t(config.titleKey)}
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-6">
         <p className="text-muted-foreground">
           {polling && !verifiedStatus
-            ? "Please wait while we verify your payment with Sentoo."
-            : config.message}
+            ? t("verifyingMessage")
+            : t(config.messageKey)}
         </p>
         {processorMessage && status !== "success" && (
           <p className="text-sm text-muted-foreground bg-muted rounded-md px-3 py-2">
@@ -154,25 +152,25 @@ function PaymentReturnContent() {
         {polling && verifiedStatus && (verifiedStatus === "pending" || verifiedStatus === "issued") && (
           <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground">
             <Loader2 className="h-4 w-4 animate-spin" />
-            Checking for updates...
+            {t("checkingUpdates")}
           </div>
         )}
         <div className="flex flex-col gap-2">
           {status !== "success" && retryUrl && (
             <Button asChild>
-              <a href={retryUrl}>Try Again</a>
+              <a href={retryUrl}>{t("tryAgain")}</a>
             </Button>
           )}
           {status !== "success" && !retryUrl && phoneId && (
             <Button asChild>
-              <Link href={`/phones/${phoneId}`}>Start New Payment</Link>
+              <Link href={`/phones/${phoneId}`}>{t("startNewPayment")}</Link>
             </Button>
           )}
           <Button asChild variant={status === "success" ? "default" : "outline"}>
-            <Link href="/phones">Continue Shopping</Link>
+            <Link href="/phones">{tc("continueShopping")}</Link>
           </Button>
           <Button asChild variant="outline">
-            <Link href="/">Go Home</Link>
+            <Link href="/">{tc("goHome")}</Link>
           </Button>
         </div>
       </CardContent>
@@ -181,14 +179,17 @@ function PaymentReturnContent() {
 }
 
 export default function PaymentReturnPage() {
+  const t = useTranslations("payment");
+
   return (
     <div className="min-h-screen">
       <header className="border-b">
-        <div className="container mx-auto px-4 py-4">
+        <div className="container mx-auto px-4 py-4 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2">
             <Smartphone className="h-6 w-6" />
             <span className="font-bold text-xl">HSO</span>
           </Link>
+          <LanguageSwitcher />
         </div>
       </header>
 
