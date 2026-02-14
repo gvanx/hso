@@ -26,14 +26,9 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ error: "Order not found" }, { status: 404 });
   }
 
-  // If already finalized, return current status without polling Sentoo
-  if (
-    order.payment_status === "success" ||
-    order.payment_status === "failed" ||
-    order.payment_status === "cancelled" ||
-    order.payment_status === "expired" ||
-    order.payment_status === "manual"
-  ) {
+  // If already successfully paid or manually resolved, return current status
+  // Don't short-circuit for failed/cancelled/expired — a retry may have succeeded
+  if (order.payment_status === "success" || order.payment_status === "manual") {
     return NextResponse.json({ status: order.payment_status });
   }
 
