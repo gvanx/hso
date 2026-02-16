@@ -7,7 +7,9 @@
     "total": "Total",
     "clear": "Limpia",
     "footer": "HSO - Telefonnan di Segunda Man | Curaçao",
-    "poweredBy": "Powered by Connections Curaçao"
+    "poweredBy": "Powered by Connections Curaçao",
+    "privacy": "Polítika di Privashon",
+    "terms": "Términonan di Servisio"
   },
   "home": {
     "heroTitle": "Telefonnan di Segunda Man di Kalidat",
@@ -109,5 +111,58 @@
   "metadata": {
     "siteTitle": "HSO - Telefonnan di Segunda Man",
     "siteDescription": "Telefonnan di segunda man di kalidat na Curaçao. Mira, kumpra, i paga sigur ku Sentoo."
+  },
+  "legal": {
+    "privacyPolicy": "Polítika di Privashon",
+    "termsOfService": "Términonan di Servisio",
+    "lastUpdated": "Último aktualidá: febrüari 2026",
+    "backToHome": "Bèk na Pashina Prinsipal"
+  },
+  "privacy": {
+    "title": "Polítika di Privashon",
+    "introTitle": "Ken Nos Ta",
+    "introText": "Connections Curaçao ta opera HSO (hso.connectionscuracao.net), un plataforma pa kumpra telefonnan di segunda man di kalidat na Curaçao. E Polítika di Privashon aki ta ekspliká kon nos ta kolektá, usá, i protehá bo informashon personal.",
+    "dataCollectTitle": "Informashon ku Nos ta Kolektá",
+    "dataCollectText": "Ora bo hasi un kumpra, nos ta kolektá: bo nòmber kompletu, adrès di email, number di telefon, i adrès di entrega (si ta apliká). Nos no ta warda dato di tarhetanan di krédito ni kuenta bankario — tur dato di pago ta manejá di forma sigur pa nos prosesadornan di pago.",
+    "dataUseTitle": "Kon Nos Ta Usá Bo Informashon",
+    "dataUseText": "Nos ta usá bo informashon pa prosesá i kompletá bo orden, manda konfirmashon i aktualidatnan via email, SMS, of WhatsApp, duna soporte na kliente, i kumplí ku obligashonnan legal.",
+    "paymentTitle": "Prosesadornan di Pago",
+    "paymentText": "Nos ta usá Sentoo pa pagonan lokal na ANG i Paddle pa pagonan ku tarjeta online. Kada prosesador ta manejá bo dato di pago bou di nan mes polítika di privashon. Nos no tin akses na bo datonan di pago kompletu.",
+    "sentooPolicy": "Polítika di Privashon di Sentoo",
+    "paddlePolicy": "Polítika di Privashon di Paddle",
+    "sharingTitle": "Kompartí Dato",
+    "sharingText": "Nos ta kompartí bo informashon personal ku terser partí solamente pa kumpli bo orden: Sentoo i Paddle pa prosesamentu di pago, Twilio pa notifikashon via SMS i WhatsApp, i Resend pa notifikashon via email. Nos nunka no ta bende bo dato personal.",
+    "retentionTitle": "Retenshon di Dato",
+    "retentionText": "Nos ta retené registronan di orden pa e tempu nesesario pa propósito legal i kontabel. Bo por solisitá eliminashon di bo dato personal na kualkier momentu.",
+    "cookiesTitle": "Cookies",
+    "cookiesText": "Nos ta usá un cookie di preferensia di idioma (NEXT_LOCALE) pa rekordá bo idioma skohí. Outentikashon di admin ta usá cookies di seshon. Nos ta usá Google Analytics pa komprendé kon bishitantenan ta usá nos sitio. Nos no ta usá cookies di seguimentu di terser partí pa propósito di publisidat.",
+    "rightsTitle": "Bo Derechonan",
+    "rightsText": "Bo tin derecho pa aksesá, korehí, of eliminá bo dato personal. Pa ehersé e derechonan aki, kontaktá nos na:",
+    "contactTitle": "Kontakto",
+    "contactText": "Pa preguntanan relashoná ku privashon, kontaktá nos na:"
+  },
+  "terms": {
+    "title": "Términonan di Servisio",
+    "introTitle": "Aseptashon di Términonan",
+    "introText": "Dor di aksesá hso.connectionscuracao.net i hasi un kumpra, bo ta aseptá e Términonan di Servisio aki. Si bo no ta di akuerdo, por fabor no usá nos website.",
+    "productsTitle": "Produktonan",
+    "productsText": "HSO ta bende telefonnan di segunda man di kalidat. Tur telefon ta testá i klasifiká promé ku ta publiká nan. Deskripshon i fotonan ta lo mas presiso posibel, pero por tin variashon kosmétiko menor debí na e naturalesa di segunda man di e produktonan.",
+    "pricingTitle": "Prijsnan",
+    "pricingText": "Tur prijs ta na XCG (ANG — Florín di Antia Hulandes). Prijsnan ta final na momentu di pago i ta inklui belasting aplikabel. Kostu di entrega, si ta apliká, ta mustra separá durante e proseso di pago.",
+    "paymentTermsTitle": "Pago",
+    "paymentTermsText": "Nos ta aseptá pago via Sentoo (pagonan bankario lokal) i Paddle (pagonan ku tarjeta online). Ora bo inisiá un pago, e telefon ta wordu reservá temporalmente pa bo. Si e pago no wordu kompletá, e reservashon ta ekspirá i e telefon ta bira disponibel atrobe.",
+    "warrantyTitle": "Garantia di 30 Dia",
+    "warrantyText": "Tur telefon ta bini ku un garantia di 30 dia for di e fecha di kumpra. Si bo eksperiensiá kualkier problema ku bo telefon den e período aki, Connections Curaçao por, na su diskrecion, kambia e telefon, repará e telefon, of duna krédito di tènda. Pa reklamá garantia, kontaktá nos ku detaye di bo orden.",
+    "warrantyExclusions": "E garantia no ta kubri daño kousá pa mal uso, kaída aksidental, daño di awa, of reparashon no outorizá hasi despues di kumpra.",
+    "ordersTitle": "Ordennan i Entrega",
+    "ordersText": "Ordennan por wordu buská na nos tènda of entregá na bo adrès na Curaçao. Kostu di entrega ta apliká pa entrega na kas. Lo bo risibí konfirmashon i aktualidatnan di orden via email, SMS, of WhatsApp.",
+    "liabilityTitle": "Limitashon di Responsabilidat",
+    "liabilityText": "Connections Curaçao no ta responsabel pa ningun daño indirékto, insidental, of konsekuensial ku ta surgi for di uso di nos website of produktonan, mas alá di e prijs di kumpra di e produkto.",
+    "governingTitle": "Lei Aplikabel",
+    "governingText": "E Términonan aki ta gobernabel pa e leynan di Curaçao. Kualkier disputa lo wordu resolví na e tribunalnan di Curaçao.",
+    "changesTitle": "Kambionan na Términonan",
+    "changesText": "Nos por aktualisa e Términonan aki di tempu en tempu. Uso kontinuo di e website ta konstitui aseptashon di e términonan aktualisa.",
+    "contactTitle": "Kontakto",
+    "contactText": "Pa preguntanan tokante e términonan aki, kontaktá nos na:"
   }
 }

@@ -126,6 +126,14 @@ export default async function HomePage() {
         <div className="container mx-auto text-center text-sm text-muted-foreground">
           <p>{tc("footer")}</p>
           <p className="mt-1">{tc("poweredBy")}</p>
+          <div className="mt-2 flex justify-center gap-4">
+            <Link href="/privacy" className="underline hover:text-foreground">
+              {tc("privacy")}
+            </Link>
+            <Link href="/terms" className="underline hover:text-foreground">
+              {tc("terms")}
+            </Link>
+          </div>
         </div>
       </footer>
     </div>

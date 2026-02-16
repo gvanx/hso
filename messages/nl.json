@@ -7,7 +7,9 @@
     "total": "Totaal",
     "clear": "Wissen",
     "footer": "HSO - Tweedehands Telefoons | Curaçao",
-    "poweredBy": "Mogelijk gemaakt door Connections Curaçao"
+    "poweredBy": "Mogelijk gemaakt door Connections Curaçao",
+    "privacy": "Privacybeleid",
+    "terms": "Algemene Voorwaarden"
   },
   "home": {
     "heroTitle": "Tweedehands Telefoons van Kwaliteit",
@@ -109,5 +111,58 @@
   "metadata": {
     "siteTitle": "HSO - Tweedehands Telefoons",
     "siteDescription": "Tweedehands kwaliteitstelefoons op Curaçao. Bekijk, koop en betaal veilig met Sentoo."
+  },
+  "legal": {
+    "privacyPolicy": "Privacybeleid",
+    "termsOfService": "Algemene Voorwaarden",
+    "lastUpdated": "Laatst bijgewerkt: februari 2026",
+    "backToHome": "Terug naar Home"
+  },
+  "privacy": {
+    "title": "Privacybeleid",
+    "introTitle": "Wie Wij Zijn",
+    "introText": "Connections Curaçao exploiteert HSO (hso.connectionscuracao.net), een platform voor het kopen van tweedehands kwaliteitstelefoons op Curaçao. Dit Privacybeleid legt uit hoe wij uw persoonlijke gegevens verzamelen, gebruiken en beschermen.",
+    "dataCollectTitle": "Informatie die Wij Verzamelen",
+    "dataCollectText": "Bij een aankoop verzamelen wij: uw volledige naam, e-mailadres, telefoonnummer en bezorgadres (indien van toepassing). Wij slaan geen creditcard- of bankrekeninggegevens op — alle betalingsgegevens worden veilig verwerkt door onze betalingsverwerkers.",
+    "dataUseTitle": "Hoe Wij Uw Informatie Gebruiken",
+    "dataUseText": "Wij gebruiken uw informatie om uw bestelling te verwerken en af te handelen, orderbevestigingen en updates te versturen via e-mail, SMS of WhatsApp, klantenondersteuning te bieden en te voldoen aan wettelijke verplichtingen.",
+    "paymentTitle": "Betalingsverwerkers",
+    "paymentText": "Wij gebruiken Sentoo voor lokale ANG-betalingen en Paddle voor online kaartbetalingen. Elke verwerker behandelt uw betalingsgegevens onder hun eigen privacybeleid. Wij hebben geen toegang tot uw volledige betalingsgegevens.",
+    "sentooPolicy": "Privacybeleid van Sentoo",
+    "paddlePolicy": "Privacybeleid van Paddle",
+    "sharingTitle": "Gegevens Delen",
+    "sharingText": "Wij delen uw persoonlijke gegevens alleen met derden om uw bestelling te vervullen: Sentoo en Paddle voor betalingsverwerking, Twilio voor SMS- en WhatsApp-meldingen, en Resend voor e-mailmeldingen. Wij verkopen nooit uw persoonlijke gegevens.",
+    "retentionTitle": "Gegevensbewaring",
+    "retentionText": "Wij bewaren ordergegevens zo lang als nodig is voor juridische en boekhoudkundige doeleinden. U kunt op elk moment verzoeken om verwijdering van uw persoonlijke gegevens.",
+    "cookiesTitle": "Cookies",
+    "cookiesText": "Wij gebruiken een taalvoorkeurscookie (NEXT_LOCALE) om uw gekozen taal te onthouden. Admin-authenticatie gebruikt sessiecookies. Wij gebruiken Google Analytics om te begrijpen hoe bezoekers onze site gebruiken. Er worden geen tracking-cookies van derden gebruikt voor advertentiedoeleinden.",
+    "rightsTitle": "Uw Rechten",
+    "rightsText": "U heeft het recht om uw persoonlijke gegevens in te zien, te corrigeren of te verwijderen. Om deze rechten uit te oefenen, neem contact met ons op via:",
+    "contactTitle": "Contact",
+    "contactText": "Voor privacygerelateerde vragen, neem contact met ons op via:"
+  },
+  "terms": {
+    "title": "Algemene Voorwaarden",
+    "introTitle": "Aanvaarding van Voorwaarden",
+    "introText": "Door hso.connectionscuracao.net te bezoeken en een aankoop te doen, gaat u akkoord met deze Algemene Voorwaarden. Als u niet akkoord gaat, gebruik dan onze website niet.",
+    "productsTitle": "Producten",
+    "productsText": "HSO verkoopt tweedehands kwaliteitstelefoons. Alle telefoons worden getest en beoordeeld voordat ze worden aangeboden. Productbeschrijvingen en foto's zijn zo nauwkeurig mogelijk, maar kleine cosmetische afwijkingen kunnen voorkomen vanwege het tweedehands karakter van de producten.",
+    "pricingTitle": "Prijzen",
+    "pricingText": "Alle prijzen zijn in XCG (ANG — Nederlands-Antilliaanse Gulden). Prijzen zijn definitief bij het afrekenen en zijn inclusief toepasselijke belastingen. Bezorgkosten worden, indien van toepassing, apart weergegeven tijdens het afrekenen.",
+    "paymentTermsTitle": "Betaling",
+    "paymentTermsText": "Wij accepteren betalingen via Sentoo (lokale bankbetalingen) en Paddle (online kaartbetalingen). Wanneer u een betaling start, wordt de telefoon tijdelijk voor u gereserveerd. Als de betaling niet wordt voltooid, vervalt de reservering en wordt de telefoon weer beschikbaar.",
+    "warrantyTitle": "30 Dagen Garantie",
+    "warrantyText": "Alle telefoons worden geleverd met een garantie van 30 dagen vanaf de aankoopdatum. Als u binnen deze periode een probleem ervaart met uw telefoon, zal Connections Curaçao naar eigen inzicht de telefoon vervangen, de telefoon repareren of winkelkrediet verstrekken. Om aanspraak te maken op de garantie, neem contact met ons op met uw ordergegevens.",
+    "warrantyExclusions": "De garantie dekt geen schade veroorzaakt door misbruik, onbedoeld vallen, waterschade of ongeautoriseerde reparaties uitgevoerd na aankoop.",
+    "ordersTitle": "Bestellingen & Levering",
+    "ordersText": "Bestellingen kunnen worden opgehaald in onze winkel of bezorgd op uw adres in Curaçao. Bezorgkosten zijn van toepassing bij thuisbezorging. U ontvangt orderbevestiging en updates via e-mail, SMS of WhatsApp.",
+    "liabilityTitle": "Beperking van Aansprakelijkheid",
+    "liabilityText": "Connections Curaçao is niet aansprakelijk voor enige indirecte, incidentele of gevolgschade voortvloeiend uit het gebruik van onze website of producten, boven de aankoopprijs van het product.",
+    "governingTitle": "Toepasselijk Recht",
+    "governingText": "Deze Voorwaarden worden beheerst door het recht van Curaçao. Geschillen worden beslecht door de rechter op Curaçao.",
+    "changesTitle": "Wijzigingen in Voorwaarden",
+    "changesText": "Wij kunnen deze Voorwaarden van tijd tot tijd bijwerken. Voortgezet gebruik van de website betekent aanvaarding van de bijgewerkte voorwaarden.",
+    "contactTitle": "Contact",
+    "contactText": "Voor vragen over deze voorwaarden, neem contact met ons op via:"
   }
 }

@@ -7,7 +7,9 @@
     "total": "Total",
     "clear": "Clear",
     "footer": "HSO - Second Hand Phones | Curaçao",
-    "poweredBy": "Powered by Connections Curaçao"
+    "poweredBy": "Powered by Connections Curaçao",
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Service"
   },
   "home": {
     "heroTitle": "Quality Second-Hand Phones",
@@ -109,5 +111,58 @@
   "metadata": {
     "siteTitle": "HSO - Second Hand Phones",
     "siteDescription": "Quality second-hand phones in Curaçao. Browse, buy, and pay securely with Sentoo."
+  },
+  "legal": {
+    "privacyPolicy": "Privacy Policy",
+    "termsOfService": "Terms of Service",
+    "lastUpdated": "Last updated: February 2026",
+    "backToHome": "Back to Home"
+  },
+  "privacy": {
+    "title": "Privacy Policy",
+    "introTitle": "Who We Are",
+    "introText": "Connections Curaçao operates HSO (hso.connectionscuracao.net), a platform for buying quality second-hand phones in Curaçao. This Privacy Policy explains how we collect, use, and protect your personal information.",
+    "dataCollectTitle": "Information We Collect",
+    "dataCollectText": "When you make a purchase, we collect: your full name, email address, phone number, and delivery address (if applicable). We do not store credit card or bank account details — all payment data is handled securely by our payment processors.",
+    "dataUseTitle": "How We Use Your Information",
+    "dataUseText": "We use your information to process and fulfill your order, send order confirmations and updates via email, SMS, or WhatsApp, provide customer support, and comply with legal obligations.",
+    "paymentTitle": "Payment Processors",
+    "paymentText": "We use Sentoo for local ANG payments and Paddle for online card payments. Each processor handles your payment data under their own privacy policies. We do not have access to your full payment details.",
+    "sentooPolicy": "Sentoo Privacy Policy",
+    "paddlePolicy": "Paddle Privacy Policy",
+    "sharingTitle": "Data Sharing",
+    "sharingText": "We only share your personal information with third parties to fulfill your order: Sentoo and Paddle for payment processing, Twilio for SMS and WhatsApp notifications, and Resend for email notifications. We never sell your personal data.",
+    "retentionTitle": "Data Retention",
+    "retentionText": "We retain order records for as long as necessary for legal and accounting purposes. You may request deletion of your personal data at any time.",
+    "cookiesTitle": "Cookies",
+    "cookiesText": "We use a language preference cookie (NEXT_LOCALE) to remember your chosen language. Admin authentication uses session cookies. We use Google Analytics to understand how visitors use our site. No third-party tracking cookies are used for advertising purposes.",
+    "rightsTitle": "Your Rights",
+    "rightsText": "You have the right to access, correct, or delete your personal data. To exercise these rights, contact us at:",
+    "contactTitle": "Contact",
+    "contactText": "For privacy-related inquiries, reach us at:"
+  },
+  "terms": {
+    "title": "Terms of Service",
+    "introTitle": "Acceptance of Terms",
+    "introText": "By accessing hso.connectionscuracao.net and making a purchase, you agree to these Terms of Service. If you do not agree, please do not use our website.",
+    "productsTitle": "Products",
+    "productsText": "HSO sells quality second-hand phones. All phones are tested and graded before listing. Product descriptions and photos are as accurate as possible, but minor cosmetic variations may occur due to the second-hand nature of the products.",
+    "pricingTitle": "Pricing",
+    "pricingText": "All prices are listed in XCG (ANG — Netherlands Antillean Guilder). Prices are final at checkout and include applicable taxes. Delivery fees, if applicable, are shown separately during checkout.",
+    "paymentTermsTitle": "Payment",
+    "paymentTermsText": "We accept payments via Sentoo (local bank payments) and Paddle (online card payments). When you initiate a payment, the phone is temporarily reserved for you. If payment is not completed, the reservation expires and the phone becomes available again.",
+    "warrantyTitle": "30-Day Warranty",
+    "warrantyText": "All phones come with a 30-day warranty from the date of purchase. If you experience any issue with your phone within this period, Connections Curaçao will, at its discretion, replace the phone, repair the phone, or provide store credit. To claim warranty, contact us with your order details.",
+    "warrantyExclusions": "The warranty does not cover damage caused by misuse, accidental drops, water damage, or unauthorized repairs performed after purchase.",
+    "ordersTitle": "Orders & Fulfillment",
+    "ordersText": "Orders can be picked up at our store or delivered to your address in Curaçao. Delivery fees apply for home delivery. You will receive order confirmation and updates via email, SMS, or WhatsApp.",
+    "liabilityTitle": "Limitation of Liability",
+    "liabilityText": "Connections Curaçao shall not be liable for any indirect, incidental, or consequential damages arising from the use of our website or products, beyond the purchase price of the product.",
+    "governingTitle": "Governing Law",
+    "governingText": "These Terms are governed by the laws of Curaçao. Any disputes shall be resolved in the courts of Curaçao.",
+    "changesTitle": "Changes to Terms",
+    "changesText": "We may update these Terms from time to time. Continued use of the website constitutes acceptance of the updated terms.",
+    "contactTitle": "Contact",
+    "contactText": "For questions about these terms, contact us at:"
   }
 }

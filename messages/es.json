@@ -7,7 +7,9 @@
     "total": "Total",
     "clear": "Limpiar",
     "footer": "HSO - Teléfonos de Segunda Mano | Curaçao",
-    "poweredBy": "Desarrollado por Connections Curaçao"
+    "poweredBy": "Desarrollado por Connections Curaçao",
+    "privacy": "Política de Privacidad",
+    "terms": "Términos de Servicio"
   },
   "home": {
     "heroTitle": "Teléfonos de Segunda Mano de Calidad",
@@ -109,5 +111,58 @@
   "metadata": {
     "siteTitle": "HSO - Teléfonos de Segunda Mano",
     "siteDescription": "Teléfonos de segunda mano de calidad en Curaçao. Explora, compra y paga de forma segura con Sentoo."
+  },
+  "legal": {
+    "privacyPolicy": "Política de Privacidad",
+    "termsOfService": "Términos de Servicio",
+    "lastUpdated": "Última actualización: febrero 2026",
+    "backToHome": "Volver al Inicio"
+  },
+  "privacy": {
+    "title": "Política de Privacidad",
+    "introTitle": "Quiénes Somos",
+    "introText": "Connections Curaçao opera HSO (hso.connectionscuracao.net), una plataforma para comprar teléfonos de segunda mano de calidad en Curaçao. Esta Política de Privacidad explica cómo recopilamos, usamos y protegemos tu información personal.",
+    "dataCollectTitle": "Información que Recopilamos",
+    "dataCollectText": "Al realizar una compra, recopilamos: tu nombre completo, dirección de correo electrónico, número de teléfono y dirección de entrega (si aplica). No almacenamos datos de tarjetas de crédito ni cuentas bancarias — todos los datos de pago son manejados de forma segura por nuestros procesadores de pago.",
+    "dataUseTitle": "Cómo Usamos tu Información",
+    "dataUseText": "Usamos tu información para procesar y completar tu pedido, enviar confirmaciones y actualizaciones por correo electrónico, SMS o WhatsApp, brindar soporte al cliente y cumplir con obligaciones legales.",
+    "paymentTitle": "Procesadores de Pago",
+    "paymentText": "Usamos Sentoo para pagos locales en ANG y Paddle para pagos con tarjeta en línea. Cada procesador maneja tus datos de pago bajo sus propias políticas de privacidad. No tenemos acceso a tus datos de pago completos.",
+    "sentooPolicy": "Política de Privacidad de Sentoo",
+    "paddlePolicy": "Política de Privacidad de Paddle",
+    "sharingTitle": "Compartir Datos",
+    "sharingText": "Solo compartimos tu información personal con terceros para cumplir tu pedido: Sentoo y Paddle para procesamiento de pagos, Twilio para notificaciones por SMS y WhatsApp, y Resend para notificaciones por correo electrónico. Nunca vendemos tus datos personales.",
+    "retentionTitle": "Retención de Datos",
+    "retentionText": "Conservamos los registros de pedidos el tiempo necesario para fines legales y contables. Puedes solicitar la eliminación de tus datos personales en cualquier momento.",
+    "cookiesTitle": "Cookies",
+    "cookiesText": "Usamos una cookie de preferencia de idioma (NEXT_LOCALE) para recordar tu idioma elegido. La autenticación de administrador usa cookies de sesión. Usamos Google Analytics para entender cómo los visitantes usan nuestro sitio. No se utilizan cookies de seguimiento de terceros con fines publicitarios.",
+    "rightsTitle": "Tus Derechos",
+    "rightsText": "Tienes derecho a acceder, corregir o eliminar tus datos personales. Para ejercer estos derechos, contáctanos en:",
+    "contactTitle": "Contacto",
+    "contactText": "Para consultas relacionadas con la privacidad, contáctanos en:"
+  },
+  "terms": {
+    "title": "Términos de Servicio",
+    "introTitle": "Aceptación de los Términos",
+    "introText": "Al acceder a hso.connectionscuracao.net y realizar una compra, aceptas estos Términos de Servicio. Si no estás de acuerdo, por favor no uses nuestro sitio web.",
+    "productsTitle": "Productos",
+    "productsText": "HSO vende teléfonos de segunda mano de calidad. Todos los teléfonos son probados y clasificados antes de publicarse. Las descripciones y fotos son lo más precisas posible, pero pueden existir variaciones cosméticas menores debido a la naturaleza de segunda mano de los productos.",
+    "pricingTitle": "Precios",
+    "pricingText": "Todos los precios están en XCG (ANG — Florín de las Antillas Neerlandesas). Los precios son finales al momento del pago e incluyen impuestos aplicables. Los costos de envío, si aplican, se muestran por separado durante el proceso de pago.",
+    "paymentTermsTitle": "Pago",
+    "paymentTermsText": "Aceptamos pagos a través de Sentoo (pagos bancarios locales) y Paddle (pagos con tarjeta en línea). Al iniciar un pago, el teléfono se reserva temporalmente para ti. Si el pago no se completa, la reserva expira y el teléfono queda disponible nuevamente.",
+    "warrantyTitle": "Garantía de 30 Días",
+    "warrantyText": "Todos los teléfonos incluyen una garantía de 30 días desde la fecha de compra. Si experimentas algún problema con tu teléfono dentro de este período, Connections Curaçao podrá, a su discreción, reemplazar el teléfono, reparar el teléfono u otorgar crédito en tienda. Para reclamar la garantía, contáctanos con los detalles de tu pedido.",
+    "warrantyExclusions": "La garantía no cubre daños causados por mal uso, caídas accidentales, daño por agua o reparaciones no autorizadas realizadas después de la compra.",
+    "ordersTitle": "Pedidos y Entrega",
+    "ordersText": "Los pedidos se pueden recoger en nuestra tienda o entregar en tu dirección en Curaçao. Se aplican costos de envío para entrega a domicilio. Recibirás confirmación y actualizaciones del pedido por correo electrónico, SMS o WhatsApp.",
+    "liabilityTitle": "Limitación de Responsabilidad",
+    "liabilityText": "Connections Curaçao no será responsable de ningún daño indirecto, incidental o consecuente derivado del uso de nuestro sitio web o productos, más allá del precio de compra del producto.",
+    "governingTitle": "Ley Aplicable",
+    "governingText": "Estos Términos se rigen por las leyes de Curaçao. Cualquier disputa se resolverá en los tribunales de Curaçao.",
+    "changesTitle": "Cambios en los Términos",
+    "changesText": "Podemos actualizar estos Términos de vez en cuando. El uso continuado del sitio web constituye la aceptación de los términos actualizados.",
+    "contactTitle": "Contacto",
+    "contactText": "Para preguntas sobre estos términos, contáctanos en:"
   }
 }
