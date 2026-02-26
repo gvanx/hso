@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { createClient } from "@/lib/supabase/client";
 import { toast } from "sonner";
 import { ImagePlus, X, Loader2 } from "lucide-react";
+import heic2any from "heic2any";
 
 interface ImageUploaderProps {
   images: string[];
@@ -24,7 +25,19 @@ export function ImageUploader({ images, onImagesChange }: ImageUploaderProps) {
     setUploading(true);
     const newImages: string[] = [];
 
-    for (const file of Array.from(files)) {
+    for (let file of Array.from(files)) {
+      const isHeic = file.name.toLowerCase().endsWith(".heic") || file.name.toLowerCase().endsWith(".heif") || file.type === "image/heic" || file.type === "image/heif";
+
+      if (isHeic) {
+        try {
+          const blob = await heic2any({ blob: file, toType: "image/jpeg", quality: 0.85 }) as Blob;
+          file = new File([blob], file.name.replace(/\.heic$/i, ".jpg").replace(/\.heif$/i, ".jpg"), { type: "image/jpeg" });
+        } catch {
+          toast.error(`Failed to convert ${file.name} from HEIC`);
+          continue;
+        }
+      }
+
       const ext = file.name.split(".").pop();
       const fileName = `${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
       const filePath = `phones/${fileName}`;
