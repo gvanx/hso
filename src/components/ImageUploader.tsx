@@ -7,6 +7,35 @@ import { createClient } from "@/lib/supabase/client";
 import { toast } from "sonner";
 import { ImagePlus, X, Loader2 } from "lucide-react";
 
+const MAX_DIMENSION = 1600;
+
+function normalizeImage(file: File): Promise<Blob> {
+  return new Promise((resolve, reject) => {
+    const img = new window.Image();
+    img.onload = () => {
+      let { width, height } = img;
+      if (width > MAX_DIMENSION || height > MAX_DIMENSION) {
+        const scale = MAX_DIMENSION / Math.max(width, height);
+        width = Math.round(width * scale);
+        height = Math.round(height * scale);
+      }
+      const canvas = document.createElement("canvas");
+      canvas.width = width;
+      canvas.height = height;
+      const ctx = canvas.getContext("2d")!;
+      ctx.drawImage(img, 0, 0, width, height);
+      canvas.toBlob(
+        (blob) => (blob ? resolve(blob) : reject(new Error("Canvas toBlob failed"))),
+        "image/jpeg",
+        0.85
+      );
+      URL.revokeObjectURL(img.src);
+    };
+    img.onerror = () => reject(new Error("Failed to load image"));
+    img.src = URL.createObjectURL(file);
+  });
+}
+
 interface ImageUploaderProps {
   images: string[];
   onImagesChange: (images: string[]) => void;
@@ -25,13 +54,20 @@ export function ImageUploader({ images, onImagesChange }: ImageUploaderProps) {
     const newImages: string[] = [];
 
     for (const file of Array.from(files)) {
-      const ext = file.name.split(".").pop();
-      const fileName = `${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
+      let blob: Blob;
+      try {
+        blob = await normalizeImage(file);
+      } catch {
+        toast.error(`Failed to process ${file.name}`);
+        continue;
+      }
+
+      const fileName = `${Date.now()}-${Math.random().toString(36).slice(2)}.jpg`;
       const filePath = `phones/${fileName}`;
 
       const { error } = await supabase.storage
         .from("phone-image")
-        .upload(filePath, file);
+        .upload(filePath, blob, { contentType: "image/jpeg" });
 
       if (error) {
         toast.error(`Failed to upload ${file.name}: ${error.message}`);
