@@ -7,22 +7,37 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { toast } from "sonner";
 import type { Phone } from "@/lib/types";
 import { formatCurrency } from "@/lib/utils";
-import { DELIVERY_FEE_CENTS } from "@/lib/constants";
-import { Loader2, CreditCard, QrCode, Store, Truck } from "lucide-react";
-import Image from "next/image";
+import {
+  DELIVERY_FEE_CENTS,
+  SENTOO_BASE_URL,
+  WHATSAPP_NUMBER,
+  STORE_NAME,
+} from "@/lib/constants";
+import {
+  CreditCard,
+  Store,
+  Truck,
+  ExternalLink,
+  MessageCircle,
+  CheckCircle2,
+  Copy,
+} from "lucide-react";
 
 export function CheckoutForm({ phone }: { phone: Phone }) {
   const t = useTranslations("checkoutForm");
   const tc = useTranslations("common");
-  const [loading, setLoading] = useState(false);
-  const [fulfillmentType, setFulfillmentType] = useState<"pickup" | "delivery">("pickup");
-  const [paymentData, setPaymentData] = useState<{
-    url: string;
-    qr_code: string;
+  const [fulfillmentType, setFulfillmentType] = useState<
+    "pickup" | "delivery"
+  >("pickup");
+  const [confirmed, setConfirmed] = useState<{
+    orderId: string;
+    payLink: string;
+    waLink: string;
+    waMessage: string;
   } | null>(null);
+  const [copied, setCopied] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -37,53 +52,57 @@ export function CheckoutForm({ phone }: { phone: Phone }) {
     setFormData((prev) => ({ ...prev, [field]: value }));
   }
 
-  async function handleSubmit(e: React.FormEvent) {
+  function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    setLoading(true);
 
-    try {
-      const res = await fetch("/api/payment/create", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          phone_id: phone.id,
-          buyer_name: formData.name,
-          buyer_email: formData.email,
-          buyer_phone: formData.phone,
-          fulfillment_type: fulfillmentType,
-          ...(fulfillmentType === "delivery" && {
-            delivery_address: formData.deliveryAddress,
-          }),
-        }),
-      });
+    const orderId = `HSO2-${Date.now().toString(36).toUpperCase()}-${Math.floor(Math.random() * 100)}`;
+    const payLink = `${SENTOO_BASE_URL}/${totalCents}`;
 
-      const data = await res.json();
+    const fulfillmentLabel =
+      fulfillmentType === "pickup" ? "Store Pickup" : "Delivery";
 
-      if (!res.ok) {
-        throw new Error(data.error || "Payment creation failed");
-      }
+    const messageParts = [
+      `Hi ${STORE_NAME}!`,
+      `Order: ${orderId}`,
+      `Phone: ${phone.model}`,
+      `Price: ${formatCurrency(totalCents)}`,
+      `Name: ${formData.name}`,
+      `Email: ${formData.email}`,
+      `Contact: ${formData.phone}`,
+      `Fulfillment: ${fulfillmentLabel}`,
+    ];
 
-      setPaymentData({
-        url: data.payment_url,
-        qr_code: data.qr_code,
-      });
-    } catch (err) {
-      toast.error(err instanceof Error ? err.message : "Something went wrong");
-    } finally {
-      setLoading(false);
+    if (fulfillmentType === "delivery" && formData.deliveryAddress) {
+      messageParts.push(`Address: ${formData.deliveryAddress}`);
     }
+
+    messageParts.push("Payment: Sentoo");
+
+    const waMessage = messageParts.join("\n");
+    const waLink = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(waMessage)}`;
+
+    window.open(payLink, "_blank");
+
+    setConfirmed({ orderId, payLink, waLink, waMessage });
   }
 
-  if (paymentData) {
+  function handleCopy() {
+    if (!confirmed) return;
+    navigator.clipboard.writeText(confirmed.waMessage);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  }
+
+  if (confirmed) {
     return (
       <Card>
         <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <CreditCard className="h-5 w-5" />
+          <CardTitle className="flex items-center gap-2 text-green-600">
+            <CheckCircle2 className="h-5 w-5" />
             {t("completePayment")}
           </CardTitle>
         </CardHeader>
-        <CardContent className="space-y-6 text-center">
+        <CardContent className="space-y-6">
           <p className="text-muted-foreground">
             {t("paymentInstructions", {
               amount: formatCurrency(totalCents),
@@ -91,27 +110,85 @@ export function CheckoutForm({ phone }: { phone: Phone }) {
             })}
           </p>
 
-          <div className="flex justify-center">
-            <div className="relative w-48 h-48 border rounded-lg overflow-hidden">
-              <Image
-                src={paymentData.qr_code}
-                alt={t("paymentQrAlt")}
-                fill
-                className="object-contain p-2"
-                unoptimized
-              />
+          {/* Order summary */}
+          <div className="rounded-lg border bg-muted/50 p-4 space-y-2 text-sm">
+            <div className="flex justify-between">
+              <span className="text-muted-foreground">Order ID</span>
+              <span className="font-mono font-medium">
+                {confirmed.orderId}
+              </span>
+            </div>
+            <div className="flex justify-between">
+              <span className="text-muted-foreground">{phone.model}</span>
+              <span>{formatCurrency(phone.price_cents)}</span>
+            </div>
+            {fulfillmentType === "delivery" && (
+              <div className="flex justify-between">
+                <span className="text-muted-foreground">
+                  {t("deliveryFee")}
+                </span>
+                <span>{formatCurrency(DELIVERY_FEE_CENTS)}</span>
+              </div>
+            )}
+            <div className="flex justify-between font-semibold border-t pt-2 mt-2">
+              <span>{tc("total")}</span>
+              <span>{formatCurrency(totalCents)}</span>
             </div>
           </div>
 
-          <Button asChild size="lg" className="w-full max-w-sm">
-            <a href={paymentData.url} target="_blank" rel="noopener noreferrer">
-              <QrCode className="h-4 w-4 mr-2" />
-              {t("payWithSentoo")}
+          {/* Reopen Sentoo payment */}
+          <Button variant="outline" asChild className="w-full">
+            <a
+              href={confirmed.payLink}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <ExternalLink className="h-4 w-4 mr-2" />
+              Reopen Sentoo Payment
             </a>
           </Button>
 
-          <p className="text-xs text-muted-foreground">
-            {t("redirectNotice")}
+          {/* WhatsApp message preview */}
+          <div className="space-y-2">
+            <div className="relative">
+              <Textarea
+                readOnly
+                value={confirmed.waMessage}
+                rows={10}
+                className="resize-none pr-12 text-sm font-mono"
+              />
+              <Button
+                type="button"
+                variant="ghost"
+                size="icon"
+                className="absolute top-2 right-2"
+                onClick={handleCopy}
+              >
+                <Copy className="h-4 w-4" />
+              </Button>
+              {copied && (
+                <span className="absolute top-2 right-12 text-xs text-green-600 font-medium">
+                  Copied!
+                </span>
+              )}
+            </div>
+          </div>
+
+          {/* Confirm on WhatsApp */}
+          <Button asChild size="lg" className="w-full">
+            <a
+              href={confirmed.waLink}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <MessageCircle className="h-4 w-4 mr-2" />
+              Confirm on WhatsApp
+            </a>
+          </Button>
+
+          <p className="text-xs text-muted-foreground text-center">
+            After paying, send the order details on WhatsApp to confirm your
+            purchase.
           </p>
         </CardContent>
       </Card>
@@ -222,8 +299,8 @@ export function CheckoutForm({ phone }: { phone: Phone }) {
             </div>
           </div>
 
-          <Button type="submit" className="w-full" size="lg" disabled={loading}>
-            {loading && <Loader2 className="h-4 w-4 mr-2 animate-spin" />}
+          <Button type="submit" className="w-full" size="lg">
+            <CreditCard className="h-4 w-4 mr-2" />
             {t("pay", { amount: formatCurrency(totalCents) })}
           </Button>
         </form>
