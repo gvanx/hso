@@ -14,7 +14,11 @@ import {
   SENTOO_BASE_URL,
   WHATSAPP_NUMBER,
   STORE_NAME,
+  EMAILJS_SERVICE_ID,
+  EMAILJS_TEMPLATE_ID,
+  EMAILJS_PUBLIC_KEY,
 } from "@/lib/constants";
+import emailjs from "@emailjs/browser";
 import {
   CreditCard,
   Store,
@@ -82,6 +86,26 @@ export function CheckoutForm({ phone }: { phone: Phone }) {
     const waLink = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(waMessage)}`;
 
     window.open(payLink, "_blank");
+
+    // Send admin email notification via EmailJS (fire and forget)
+    const phoneDesc = `${phone.brand} ${phone.model}${phone.storage_gb ? ` ${phone.storage_gb}GB` : ""}${phone.color ? ` - ${phone.color}` : ""}`;
+    emailjs
+      .send(
+        EMAILJS_SERVICE_ID,
+        EMAILJS_TEMPLATE_ID,
+        {
+          name: formData.name,
+          email: formData.email,
+          whatsapp: formData.phone,
+          product: phoneDesc,
+          type: "SENTOO",
+          amount: formatCurrency(totalCents),
+          delivery: fulfillmentLabel,
+          orderId,
+        },
+        EMAILJS_PUBLIC_KEY
+      )
+      .catch(() => {});
 
     setConfirmed({ orderId, payLink, waLink, waMessage });
   }
