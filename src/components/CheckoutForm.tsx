@@ -64,7 +64,7 @@ export function CheckoutForm({ phone }: { phone: Phone }) {
     const messageParts = [
       `Hi ${STORE_NAME}!`,
       `Order: ${orderId}`,
-      `Phone: ${phone.model}`,
+      `Phone: ${phone.brand} ${phone.model}${phone.storage_gb ? ` ${phone.storage_gb}GB` : ""}${phone.color ? ` - ${phone.color}` : ""}`,
       `Price: ${formatCurrency(totalCents)}`,
       `Name: ${formData.name}`,
       `Email: ${formData.email}`,
