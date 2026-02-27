@@ -3,6 +3,7 @@ export const dynamic = "force-dynamic";
 import { createClient } from "@/lib/supabase/server";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Smartphone, ShoppingCart, DollarSign, Package } from "lucide-react";
+import { AdminPhoneTable } from "@/components/AdminPhoneTable";
 
 export default async function AdminDashboard() {
   const supabase = await createClient();
@@ -13,6 +14,7 @@ export default async function AdminDashboard() {
     { count: soldPhones },
     { count: totalOrders },
     { data: successOrders },
+    { data: phones },
   ] = await Promise.all([
     supabase.from("phones").select("*", { count: "exact", head: true }),
     supabase
@@ -28,6 +30,7 @@ export default async function AdminDashboard() {
       .from("orders")
       .select("amount_cents")
       .in("payment_status", ["success", "manual"]),
+    supabase.from("phones").select("*").order("created_at", { ascending: false }),
   ]);
 
   const totalRevenue =
@@ -81,6 +84,9 @@ export default async function AdminDashboard() {
           </Card>
         ))}
       </div>
+
+      <h2 className="text-xl font-semibold mt-10 mb-4">Phones</h2>
+      <AdminPhoneTable phones={phones || []} />
     </div>
   );
 }

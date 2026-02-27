@@ -46,7 +46,7 @@ export default async function PhonesPage({
   }
 
   if (params.brand) {
-    query = query.eq("brand", params.brand);
+    query = query.ilike("brand", params.brand);
   }
 
   if (params.grade) {
@@ -72,7 +72,9 @@ export default async function PhonesPage({
     .from("phones")
     .select("brand")
     .eq("status", "available");
-  const brands = [...new Set(brandData?.map((b) => b.brand) || [])].sort();
+  const brands = [...new Set(
+    brandData?.map((b) => b.brand.charAt(0).toUpperCase() + b.brand.slice(1).toLowerCase()) || []
+  )].sort();
 
   return (
     <div className="min-h-screen">
