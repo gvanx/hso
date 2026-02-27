@@ -11,6 +11,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     .from("phones")
     .select("id, updated_at")
     .eq("status", "available")
+    .not("reference", "like", "TEST-%")
     .order("updated_at", { ascending: false });
 
   const phoneEntries: MetadataRoute.Sitemap = (phones ?? []).map((phone) => ({

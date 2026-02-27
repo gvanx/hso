@@ -37,7 +37,8 @@ export default async function PhonesPage({
   let query = supabase
     .from("phones")
     .select("*", { count: "exact" })
-    .eq("status", "available");
+    .eq("status", "available")
+    .not("reference", "like", "TEST-%");
 
   if (params.search) {
     query = query.or(
@@ -71,7 +72,8 @@ export default async function PhonesPage({
   const { data: brandData } = await supabase
     .from("phones")
     .select("brand")
-    .eq("status", "available");
+    .eq("status", "available")
+    .not("reference", "like", "TEST-%");
   const brands = [...new Set(
     brandData?.map((b) => b.brand.charAt(0).toUpperCase() + b.brand.slice(1).toLowerCase()) || []
   )].sort();

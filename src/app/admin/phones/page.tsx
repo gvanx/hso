@@ -12,6 +12,7 @@ export default async function AdminPhonesPage() {
   const { data: phones } = await supabase
     .from("phones")
     .select("*")
+    .not("reference", "like", "TEST-%")
     .order("created_at", { ascending: false });
 
   return (

@@ -14,6 +14,7 @@ export default async function AdminDashboard() {
     supabase
       .from("phones")
       .select("*")
+      .not("reference", "like", "TEST-%")
       .order("created_at", { ascending: false }),
   ]);
 

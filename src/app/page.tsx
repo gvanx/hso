@@ -17,6 +17,7 @@ export default async function HomePage() {
     .from("phones")
     .select("*")
     .eq("status", "available")
+    .not("reference", "like", "TEST-%")
     .order("created_at", { ascending: false })
     .limit(8);
 
