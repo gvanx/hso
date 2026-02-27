@@ -1,30 +1,11 @@
-import twilio from "twilio";
 import { Resend } from "resend";
 import type { Order, Phone } from "./types";
-
-const twilioClient =
-  process.env.TWILIO_ACCOUNT_SID && process.env.TWILIO_AUTH_TOKEN
-    ? twilio(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN)
-    : null;
 
 const resend =
   process.env.RESEND_API_KEY ? new Resend(process.env.RESEND_API_KEY) : null;
 
 function formatCurrency(cents: number): string {
   return `XCG ${(cents / 100).toFixed(2)}`;
-}
-
-export async function sendSMS(order: Order, phone: Phone) {
-  if (!twilioClient || !process.env.TWILIO_PHONE_NUMBER) {
-    console.warn("Twilio not configured, skipping SMS");
-    return;
-  }
-
-  await twilioClient.messages.create({
-    body: `HSO: Your purchase of ${phone.model} for ${formatCurrency(order.amount_cents)} is confirmed! Order #${order.id.slice(0, 8)}. Thank you!`,
-    from: process.env.TWILIO_PHONE_NUMBER,
-    to: order.buyer_phone,
-  });
 }
 
 export async function sendEmail(
@@ -64,34 +45,6 @@ export async function sendEmail(
       </div>
     `,
   });
-}
-
-export async function sendWhatsApp(
-  order: Order,
-  phone: Phone,
-  invoiceUrl?: string
-) {
-  if (!twilioClient || !process.env.TWILIO_WHATSAPP_NUMBER) {
-    console.warn("Twilio WhatsApp not configured, skipping");
-    return;
-  }
-
-  const messageOpts: {
-    body: string;
-    from: string;
-    to: string;
-    mediaUrl?: string[];
-  } = {
-    body: `HSO: Your purchase of ${phone.model} for ${formatCurrency(order.amount_cents)} is confirmed! Order #${order.id.slice(0, 8)}.`,
-    from: `whatsapp:${process.env.TWILIO_WHATSAPP_NUMBER}`,
-    to: `whatsapp:${order.buyer_phone}`,
-  };
-
-  if (invoiceUrl) {
-    messageOpts.mediaUrl = [invoiceUrl];
-  }
-
-  await twilioClient.messages.create(messageOpts);
 }
 
 function warrantyLabel(phone: Phone): string {
@@ -151,8 +104,6 @@ export async function sendAllNotifications(
   const results = await Promise.allSettled([
     sendEmail(order, phone, invoiceUrl, fulfillmentType),
     sendStoreNotification(order, phone, invoiceUrl),
-    // sendSMS(order, phone),       // TODO: enable when Twilio SMS is verified
-    // sendWhatsApp(order, phone, invoiceUrl), // TODO: enable when WhatsApp Business is set up
   ]);
 
   results.forEach((result, i) => {
