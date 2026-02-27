@@ -83,8 +83,39 @@ export default async function PhoneDetailPage({
 
   const isAvailable = phone.status === "available";
 
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "";
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    name: `${phone.brand} ${phone.model}${phone.storage_gb ? ` ${formatStorage(phone.storage_gb)}` : ""}`,
+    description: phone.description || `${phone.brand} ${phone.model} second-hand phone`,
+    brand: { "@type": "Brand", name: phone.brand },
+    ...(phone.images?.[0] && { image: phone.images[0] }),
+    offers: {
+      "@type": "Offer",
+      price: (phone.price_cents / 100).toFixed(2),
+      priceCurrency: "ANG",
+      availability: isAvailable
+        ? "https://schema.org/InStock"
+        : "https://schema.org/SoldOut",
+      url: `${siteUrl}/phones/${id}`,
+      seller: { "@type": "Organization", name: "HSO Curaçao" },
+    },
+    ...(phone.grade && {
+      additionalProperty: {
+        "@type": "PropertyValue",
+        name: "Condition Grade",
+        value: phone.grade,
+      },
+    }),
+  };
+
   return (
     <div className="min-h-screen">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <header className="border-b">
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2">

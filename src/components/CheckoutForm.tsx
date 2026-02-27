@@ -69,6 +69,7 @@ export function CheckoutForm({ phone }: { phone: Phone }) {
       `Hi ${STORE_NAME}!`,
       `Order: ${orderId}`,
       `Phone: ${phone.brand} ${phone.model}${phone.storage_gb ? ` ${phone.storage_gb}GB` : ""}${phone.color ? ` - ${phone.color}` : ""}`,
+      ...(phone.reference ? [`Ref/IMEI: ${phone.reference}`] : []),
       `Price: ${formatCurrency(totalCents)}`,
       `Name: ${formData.name}`,
       `Email: ${formData.email}`,
@@ -88,7 +89,7 @@ export function CheckoutForm({ phone }: { phone: Phone }) {
     window.open(payLink, "_blank");
 
     // Send admin email notification via EmailJS (fire and forget)
-    const phoneDesc = `${phone.brand} ${phone.model}${phone.storage_gb ? ` ${phone.storage_gb}GB` : ""}${phone.color ? ` - ${phone.color}` : ""}`;
+    const phoneDesc = `${phone.brand} ${phone.model}${phone.storage_gb ? ` ${phone.storage_gb}GB` : ""}${phone.color ? ` - ${phone.color}` : ""}${phone.reference ? ` (Ref: ${phone.reference})` : ""}`;
     emailjs
       .send(
         EMAILJS_SERVICE_ID,
