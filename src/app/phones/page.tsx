@@ -1,4 +1,4 @@
-export const dynamic = "force-dynamic";
+export const revalidate = 60; // revalidate every 60 seconds
 
 import { Suspense } from "react";
 import Link from "next/link";

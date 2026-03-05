@@ -1,3 +1,5 @@
+export const revalidate = 300; // revalidate every 5 minutes
+
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
