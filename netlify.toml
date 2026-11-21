@@ -4,3 +4,17 @@
 
 [[plugins]]
   package = "@netlify/plugin-nextjs"
+
+# Consolidate the legacy HSO storefront without affecting other site domains.
+# Netlify forwards query parameters automatically for these 301 redirects.
+[[redirects]]
+  from = "https://hso2.connectionscuracao.net/*"
+  to = "https://connectionscuracao.net/hso/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "http://hso2.connectionscuracao.net/*"
+  to = "https://connectionscuracao.net/hso/"
+  status = 301
+  force = true
